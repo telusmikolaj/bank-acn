@@ -1,0 +1,21 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: bank-app
+  datasource:
+      username: postgres
+      password: example
+      url: jdbc:postgresql://localhost:5433/bank
+  jpa:
+    open-in-view: 'false'
+    show-sql: 'true'
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: 'true'
+    change-log: classpath:liquibase-changeLog.xml

@@ -1,0 +1,21 @@
+services:
+
+  db:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres:/data/postgres
+      - ./src/main/resources/init:/docker-entrypoint-initdb.d
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  postgres:
