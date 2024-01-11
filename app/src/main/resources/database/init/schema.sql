@@ -44,6 +44,7 @@ CREATE TABLE customer (
 );
 CREATE TABLE product (
                          id SERIAL PRIMARY KEY,
+                         product_number TEXT,
                          balance MONEY NOT NULL CHECK (balance >= 0),
                          opening_date DATE NOT NULL,
                          account_number TEXT UNIQUE,
