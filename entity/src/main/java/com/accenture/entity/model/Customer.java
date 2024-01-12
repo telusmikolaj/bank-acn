@@ -17,6 +17,9 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "customer_number", unique = true)
+    private String customerNumber;
+
     @OneToOne
     @JoinColumn(name = "address", referencedColumnName = "id")
     private Address address;

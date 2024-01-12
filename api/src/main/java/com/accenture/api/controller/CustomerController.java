@@ -32,9 +32,9 @@ public class CustomerController {
                 .body(createHttpResponse(CREATED, of("customer", created), "Customer created"));
     }
 
-    @GetMapping({"/{customerId}"})
-    public ResponseEntity<HttpResponse> get(@PathVariable Long customerId) {
-        CustomerDTO customerDTO = this.customerService.selectById(customerId);
+    @GetMapping({"/{customerNumber}"})
+    public ResponseEntity<HttpResponse> get(@PathVariable String customerNumber) {
+        CustomerDTO customerDTO = this.customerService.selectByCustomerNumber(customerNumber);
         return ResponseEntity
                 .ok()
                 .body(createHttpResponse(OK, of("customer", customerDTO), "Customer created"));

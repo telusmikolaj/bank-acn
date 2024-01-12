@@ -28,4 +28,9 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO selectById(Long id) {
         return this.customerDao.selectById(id);
     }
+
+    @Override
+    public CustomerDTO selectByCustomerNumber(String customerNumber) {
+        return this.customerDao.selectByCustomerNumber(customerNumber);
+    }
 }

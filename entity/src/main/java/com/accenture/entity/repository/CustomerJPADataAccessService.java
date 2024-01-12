@@ -33,6 +33,13 @@ public class CustomerJPADataAccessService implements CustomerDao {
     }
 
     @Override
+    public CustomerDTO selectByCustomerNumber(String customerNumber) {
+        return this.customerRepository.findCustomerByCustomerNumber(customerNumber)
+                .map(customerMapper::toDto)
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    @Override
     public CustomerDTO create(CustomerForm customerForm) {
         return this.customerMapper.toDto(
                 this.customerRepository.save(

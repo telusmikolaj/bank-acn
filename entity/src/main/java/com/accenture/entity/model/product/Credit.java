@@ -1,12 +1,16 @@
 package com.accenture.entity.model.product;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "credit")
+@Data
 public class Credit extends Product {
 
     @Column(name = "launch_date", nullable = false)

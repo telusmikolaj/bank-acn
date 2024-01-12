@@ -12,4 +12,6 @@ public interface CustomerService {
     List<CustomerDTO> selectAll();
 
     CustomerDTO selectById(Long id);
+
+    CustomerDTO selectByCustomerNumber(String customerNumber);
 }
