@@ -8,4 +8,9 @@ import java.util.List;
 public class RequestSearchForm {
 
     private List<SearchRequestDTO> searchRequestDTO;
+    private GlobalOperator globalOperator;
+
+    public enum GlobalOperator {
+        AND, OR
+    }
 }

@@ -26,7 +26,10 @@ public class CustomerJPADataAccessService implements CustomerDao {
 
     @Override
     public List<CustomerDTO> searchCustomers(RequestSearchForm searchForm) {
-        return this.customerRepository.findAll(customerFiltersSpecification.getSearchSpecification(searchForm.getSearchRequestDTO()))
+        return this.customerRepository.findAll(
+                        customerFiltersSpecification.getSearchSpecification(
+                                searchForm.getSearchRequestDTO(),
+                                searchForm.getGlobalOperator()))
                 .stream()
                 .map(customerMapper::toDto)
                 .toList();
