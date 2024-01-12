@@ -2,15 +2,14 @@ package com.accenture.api.controller;
 
 import com.accenture.api.dto.CustomerDTO;
 import com.accenture.api.form.CustomerForm;
+import com.accenture.api.form.RequestSearchForm;
+import com.accenture.api.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.accenture.api.service.CustomerService;
 
-import java.awt.print.Pageable;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +34,9 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<CustomerDTO> searchCustomers(@RequestParam String searchQuery) {
-        return customerService.searchCustomers(searchQuery);
+    public List<CustomerDTO> searchCustomers(@RequestBody RequestSearchForm requestForm) {
+        return this.customerService.searchCustomers(requestForm);
+
     }
 
     private HttpResponse createHttpResponse(HttpStatus httpStatus, Map<?, ?> data, String message) {
