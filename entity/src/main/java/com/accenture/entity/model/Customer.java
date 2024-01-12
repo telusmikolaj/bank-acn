@@ -1,20 +1,36 @@
 package com.accenture.entity.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.accenture.entity.model.customer.CustomerType;
+import com.accenture.entity.model.data.Address;
+import com.accenture.entity.model.data.ContactData;
+import com.accenture.entity.model.employee.Employee;
+import jakarta.persistence.*;
 import lombok.*;
 
 
 @Entity
+@Table(name = "customer")
 @Data
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cif;
-    private String firstName;
-    private String lastName;
+
+    @OneToOne
+    @JoinColumn(name = "address", referencedColumnName = "id")
+    private Address address;
+
+    @OneToOne
+    @JoinColumn(name = "contact_data", referencedColumnName = "id")
+    private ContactData contactData;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_type", referencedColumnName = "id")
+    private CustomerType customerType;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    private Employee employee;
+
 }

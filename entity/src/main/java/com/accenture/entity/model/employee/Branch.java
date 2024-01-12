@@ -1,17 +1,20 @@
-package com.accenture.entity.model;
+package com.accenture.entity.model.employee;
 
+import com.accenture.entity.model.data.Address;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
 @Entity
+@Table(name = "branch")
 @Data
-public class Role {
+public class Branch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "address", referencedColumnName = "id", unique = true)
     private Address address;
 

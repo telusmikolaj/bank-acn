@@ -42,14 +42,6 @@ CREATE TABLE customer (
                           customer_type INT REFERENCES customer_type(id),
                           employee_id INT REFERENCES employee(id)
 );
-CREATE TABLE product (
-                         id SERIAL PRIMARY KEY,
-                         product_number TEXT,
-                         balance MONEY NOT NULL CHECK (balance >= 0),
-                         opening_date DATE NOT NULL,
-                         account_number TEXT UNIQUE,
-                         customer_id INT NOT NULL REFERENCES customer(id)
-);
 
 CREATE TABLE payment_details (
                                  id SERIAL PRIMARY KEY,
@@ -60,13 +52,25 @@ CREATE TABLE payment_details (
                                  late_fee DECIMAL(10, 2),
                                  notes TEXT
 );
+
+
+CREATE TABLE product (
+                         id SERIAL PRIMARY KEY,
+                         product_number TEXT,
+                         balance MONEY NOT NULL CHECK (balance > 0),
+                         opening_date DATE NOT NULL,
+                         account_number TEXT UNIQUE,
+                         customer_id INT NOT NULL REFERENCES customer(id)
+);
+
+
 CREATE TABLE credit (
                         id INT PRIMARY KEY,
                         launch_date DATE NOT NULL,
                         due_date DATE NOT NULL,
                         interest_rate DECIMAL(5, 2) NOT NULL,
-                        product_id INT REFERENCES product(id),
-                        payment_details_id INT REFERENCES payment_details(id)
+                        payment_details_id INT REFERENCES payment_details(id),
+                        FOREIGN KEY (id) REFERENCES product(id)
 );
 
 CREATE TABLE leasing (
@@ -75,13 +79,16 @@ CREATE TABLE leasing (
                          due_date DATE NOT NULL,
                          interest_rate DECIMAL(5, 4) NOT NULL,
                          product_id INT NOT NULL REFERENCES product(id),
-                         payment_details_id INT REFERENCES payment_details(id)
+                         payment_details_id INT REFERENCES payment_details(id),
+                         FOREIGN KEY (id) REFERENCES product(id)
+
 );
 
 CREATE TABLE saving_account (
                          id INT PRIMARY KEY,
                          interest_rate DECIMAL(5, 4) NOT NULL,
-                         product_id INT NOT NULL REFERENCES product(id)
+                         product_id INT NOT NULL REFERENCES product(id),
+                         FOREIGN KEY (id) REFERENCES product(id)
 );
 
 CREATE TABLE activity (
@@ -96,19 +103,19 @@ CREATE TABLE activity (
 CREATE TABLE meeting (
                          id INT PRIMARY KEY,
                          address_id INT NOT NULL REFERENCES address(id),
-                         activity_id INT REFERENCES activity(id)
+                         FOREIGN KEY (id) REFERENCES activity(id)
 );
 
 CREATE TABLE call (
                       id INT PRIMARY KEY,
                       start_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
                       contact_data INT NOT NULL REFERENCES contact_data(id),
-                      activity_id INT NOT NULL REFERENCES activity(id)
+                      FOREIGN KEY (id) REFERENCES activity(id)
 );
 
 CREATE TABLE offer (
                        id INT PRIMARY KEY,
-                       activity_id INT NOT NULL REFERENCES activity(id),
                        product_id INT NOT NULL REFERENCES product(id),
-                       validity_period DATE NOT NULL
+                       validity_period DATE NOT NULL,
+                       FOREIGN KEY (id) REFERENCES activity(id)
 );
