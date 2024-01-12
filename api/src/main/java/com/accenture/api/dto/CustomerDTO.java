@@ -1,11 +1,18 @@
 package com.accenture.api.dto;
 
-import lombok.*;
+import lombok.Data;
 
 @Data
 public class CustomerDTO {
     private Long id;
-    private String cif;
-    private String firstName;
-    private String lastName;
+
+    private String customerNumber;
+
+    private AddressDTO address;
+
+    private ContactDataDTO contactData;
+
+    private CustomerTypeDTO customerType;
+
+    private EmployeeDTO employee;
 }

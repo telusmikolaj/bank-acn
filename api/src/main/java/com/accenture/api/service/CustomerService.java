@@ -14,4 +14,5 @@ public interface CustomerService {
     CustomerDTO selectById(Long id);
 
     CustomerDTO selectByCustomerNumber(String customerNumber);
+    List<CustomerDTO> searchCustomers(String searchQuery);
 }

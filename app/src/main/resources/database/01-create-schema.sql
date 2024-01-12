@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS branch (
 );
 CREATE TABLE IF NOT EXISTS role (
                                     id SERIAL PRIMARY KEY,
-                                    name TEXT UNIQUE
+                                    name TEXT UNIQUE,
+                                    description TEXT
 );
 CREATE TABLE IF NOT EXISTS customer_type (
                                              id SERIAL PRIMARY KEY,

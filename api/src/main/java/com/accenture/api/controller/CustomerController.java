@@ -3,19 +3,21 @@ package com.accenture.api.controller;
 import com.accenture.api.dto.CustomerDTO;
 import com.accenture.api.form.CustomerForm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.accenture.api.service.CustomerService;
 
+import java.awt.print.Pageable;
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 import static java.time.LocalTime.now;
 import static java.util.Map.of;
 import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping(path = "/customer")
@@ -32,12 +34,9 @@ public class CustomerController {
                 .body(createHttpResponse(CREATED, of("customer", created), "Customer created"));
     }
 
-    @GetMapping({"/{customerNumber}"})
-    public ResponseEntity<HttpResponse> get(@PathVariable String customerNumber) {
-        CustomerDTO customerDTO = this.customerService.selectByCustomerNumber(customerNumber);
-        return ResponseEntity
-                .ok()
-                .body(createHttpResponse(OK, of("customer", customerDTO), "Customer created"));
+    @GetMapping
+    public List<CustomerDTO> searchCustomers(@RequestParam String searchQuery) {
+        return customerService.searchCustomers(searchQuery);
     }
 
     private HttpResponse createHttpResponse(HttpStatus httpStatus, Map<?, ?> data, String message) {
@@ -53,4 +52,6 @@ public class CustomerController {
     private URI getUri() {
         return URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/customer/get/<customerId>").toUriString());
     }
+
+
 }

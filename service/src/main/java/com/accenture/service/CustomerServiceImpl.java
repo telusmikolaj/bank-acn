@@ -15,6 +15,10 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerDao customerDao;
 
     @Override
+    public List<CustomerDTO> searchCustomers(String searchQuery) {
+        return this.customerDao.searchCustomers(searchQuery);
+    }
+    @Override
     public CustomerDTO create(CustomerForm customerForm) {
         return this.customerDao.create(customerForm);
     }
@@ -33,4 +37,5 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO selectByCustomerNumber(String customerNumber) {
         return this.customerDao.selectByCustomerNumber(customerNumber);
     }
+
 }

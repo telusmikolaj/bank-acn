@@ -14,4 +14,6 @@ public interface CustomerDao {
     CustomerDTO create(CustomerForm customerForm);
 
     CustomerDTO selectByCustomerNumber(String customerNumber);
+
+    List<CustomerDTO> searchCustomers(String searchQuery);
 }

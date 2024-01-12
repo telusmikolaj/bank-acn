@@ -11,12 +11,12 @@ VALUES (1),
        (2);
 
 INSERT INTO role (name)
-VALUES ('Manager'),
-       ('Sales');
+VALUES ('MANAGER'),
+       ('SALES');
 
 INSERT INTO customer_type (name)
-VALUES ('Regular'),
-       ('Premium');
+VALUES ('REGULAR'),
+       ('PREMIUM');
 
 INSERT INTO employee (employee_number, first_name, last_name, address, branch_id, role, supervisor)
 VALUES ('EMP001', 'John', 'Doe', 1, 1, 1, NULL),
