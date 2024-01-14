@@ -35,28 +35,6 @@ public class CustomerJPADataAccessService implements CustomerDao {
                 .toList();
 
     }
-
-    @Override
-    public List<CustomerDTO> selectAll() {
-
-        return this.customerRepository.findAll().stream().map(customerMapper::toDto).toList();
-    }
-
-    @Override
-    public CustomerDTO selectById(Long id) {
-        return this.customerRepository.findById(id)
-                .map(customerMapper::toDto)
-                .orElseThrow(NoSuchElementException::new);
-    }
-
-    @Override
-    public CustomerDTO selectByCustomerNumber(String customerNumber) {
-        return this.customerRepository.findCustomerByCustomerNumber(customerNumber)
-                .map(customerMapper::toDto)
-                .orElseThrow(NoSuchElementException::new);
-    }
-
-
     @Override
     public CustomerDTO create(CustomerForm customerForm) {
         return this.customerMapper.toDto(
