@@ -22,6 +22,9 @@ public class Customer {
     @Column(name = "customer_number", unique = true)
     private String customerNumber;
 
+    @Column(name = "cif", unique = true)
+    private String cif;
+
     @OneToOne
     @JoinColumn(name = "address", referencedColumnName = "id")
     @Cascade(CascadeType.PERSIST)

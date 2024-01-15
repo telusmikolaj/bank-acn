@@ -4,16 +4,16 @@ import com.accenture.api.dto.CustomerDTO;
 import com.accenture.api.form.CustomerForm;
 import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.form.SearchRequestDTO;
-import com.accenture.entity.mapper.*;
+import com.accenture.entity.mapper.CustomerMapper;
 import com.accenture.entity.model.Customer;
 import com.accenture.entity.specification.FiltersSpecification;
 import com.accenture.entity.util.SampleDataFactory;
+import com.accenture.entity.util.SearchCondition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -41,26 +41,19 @@ class CustomerJPADataAccessServiceTest {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private CustomerTypeRepository customerTypeRepository;
     private CustomerJPADataAccessService underTest;
     @InjectMocks
     private CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
 
-    @Spy
-    private AddressMapper addressMapper = Mappers.getMapper(AddressMapper.class);
-    @Spy
-    private ContactDataMapper contactDataMapper = Mappers.getMapper(ContactDataMapper.class);
-
-    @Spy
-    private CustomerTypeMapper customerTypeMapper = Mappers.getMapper(CustomerTypeMapper.class);
-    @Spy
-    private EmployeeMapper employeeMapper = Mappers.getMapper(EmployeeMapper.class);
-
-    @Spy
-    private BranchMapper branchMapper = Mappers.getMapper(BranchMapper.class);
-
     @BeforeEach
     void setUp() {
-        this.underTest = new CustomerJPADataAccessService(customerRepository, customerMapper, filtersSpecification);
+        this.underTest = new CustomerJPADataAccessService(customerRepository, customerMapper, employeeRepository, customerTypeRepository, filtersSpecification);
     }
 
     @Test
@@ -83,8 +76,15 @@ class CustomerJPADataAccessServiceTest {
 
         //when
         List<CustomerDTO> customerDTOS =
-                this.underTest.searchCustomers(getRequestSearchFormForCustomer(
-                        customer, CUSTOMER_NUMBER_COLUMN, SearchRequestDTO.Operation.EQUAL));
+                this.underTest.searchCustomers(createComplexRequestSearchForm(
+                        List.of(
+                                createSearchCondition(
+                                        CUSTOMER_NUMBER_COLUMN,
+                                        customer.getCustomerNumber(),
+                                        SearchRequestDTO.Operation.EQUAL,
+                                        "",
+                                        "")
+                        ), RequestSearchForm.GlobalOperator.AND));
 
         //then
         assertThat(customerDTOS.size()).isEqualTo(1);
@@ -93,24 +93,51 @@ class CustomerJPADataAccessServiceTest {
                 .isTrue();
     }
 
-    private RequestSearchForm getRequestSearchFormForCustomer(Customer customer, String columnName, SearchRequestDTO.Operation operation) {
-        SearchRequestDTO searchRequestDTO = buildSearchRequestDTO(columnName, customer.getCustomerNumber(), operation);
-        return buildRequestSearchForm(List.of(searchRequestDTO));
+    public SearchCondition createSearchCondition(String column, String value, SearchRequestDTO.Operation operation, String joinTable, String joinField) {
+        SearchCondition.SearchConditionBuilder condition = SearchCondition.builder()
+                .column(column)
+                .value(value)
+                .operation(operation);
+
+        if (isJoinTableAndFieldProvided(joinTable, joinField)) {
+            condition.joinTable(joinTable);
+            condition.joinField(joinField);
+        }
+
+        return condition.build();
     }
 
-    private RequestSearchForm buildRequestSearchForm(List<SearchRequestDTO> searchRequestDTOS) {
+    public RequestSearchForm createComplexRequestSearchForm(List<SearchCondition> conditions, RequestSearchForm.GlobalOperator globalOperator) {
+        List<SearchRequestDTO> dtos = conditions.stream()
+                .map(condition -> buildSearchRequestDTO(condition.getColumn(), condition.getValue(), condition.getOperation(), condition.getJoinTable(), condition.getJoinField()))
+                .toList();
+
+        return buildRequestSearchForm(dtos, globalOperator);
+    }
+
+    private RequestSearchForm buildRequestSearchForm(List<SearchRequestDTO> searchRequestDTOS, RequestSearchForm.GlobalOperator globalOperator) {
         return RequestSearchForm.builder()
                 .searchRequestDTO(searchRequestDTOS)
-                .globalOperator(RequestSearchForm.GlobalOperator.AND)
+                .globalOperator(globalOperator)
                 .build();
     }
 
-    private SearchRequestDTO buildSearchRequestDTO(String columnName, String value, SearchRequestDTO.Operation operation) {
-        return SearchRequestDTO.builder()
-                .column(columnName)
+    private SearchRequestDTO buildSearchRequestDTO(String column, String value, SearchRequestDTO.Operation operation, String joinTable, String joinField) {
+        SearchRequestDTO.SearchRequestDTOBuilder builder = SearchRequestDTO.builder()
+                .column(column)
                 .value(value)
-                .operation(operation)
-                .build();
+                .operation(operation);
+
+        if (isJoinTableAndFieldProvided(joinTable, joinField)) {
+            builder.joinTable(joinTable)
+                    .joinField(joinField);
+        }
+
+        return builder.build();
+    }
+
+    private boolean isJoinTableAndFieldProvided(String joinTable, String joinField) {
+        return joinTable != null && !joinTable.isEmpty() && joinField != null && !joinField.isEmpty();
     }
 
 }

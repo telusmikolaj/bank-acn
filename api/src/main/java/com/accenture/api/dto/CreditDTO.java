@@ -3,13 +3,15 @@ package com.accenture.api.dto;
 import com.accenture.api.form.PaymentDetailsForm;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
-public class CreditDTO {
+public class CreditDTO extends ProductDTO {
 
     private LocalDate launchDate;
 
@@ -19,13 +21,4 @@ public class CreditDTO {
 
     private PaymentDetailsForm paymentDetails;
 
-    private String productNumber;
-
-    private BigDecimal balance;
-
-    private LocalDate openingDate;
-
-    private String accountNumber;
-
-    private Long customerId;
 }

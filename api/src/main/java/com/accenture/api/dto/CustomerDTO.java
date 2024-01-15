@@ -15,4 +15,6 @@ public class CustomerDTO {
     private CustomerTypeDTO customerType;
 
     private EmployeeDTO employee;
+
+    private String cif;
 }

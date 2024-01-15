@@ -16,6 +16,7 @@ public class SampleDataFactory {
     public static CustomerForm getSampleCustomerForm() {
         return CustomerForm.builder()
                 .customerNumber("CUST" + faker.business().creditCardNumber())
+                .cif("CUST" + faker.business().creditCardNumber())
                 .address(getSampleAddressDto())
                 .contactData(getSampleContactDataDTO())
                 .customerType(CustomerTypeName.PREMIUM)

@@ -8,8 +8,11 @@ import java.time.LocalDate;
 
 @Data
 public class ProductDTO {
+
     private Long id;
+
     private String productNumber;
+
     private BigDecimal balance;
 
     private LocalDate openingDate;
@@ -17,4 +20,8 @@ public class ProductDTO {
     private String accountNumber;
 
     private CustomerDTO customer;
+
+
+
+
 }

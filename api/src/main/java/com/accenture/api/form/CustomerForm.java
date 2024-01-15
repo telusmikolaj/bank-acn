@@ -18,4 +18,7 @@ public class CustomerForm {
     private CustomerTypeName customerType;
 
     private Long employeeId;
+
+    private String cif;
+
 }

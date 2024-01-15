@@ -23,9 +23,9 @@ VALUES ('EMP001', 'John', 'Doe', 1, 1, 1, NULL),
        ('EMP002', 'Jane', 'Smith', 2, 2, 2, 1);
 
 
-INSERT INTO customer (address, customer_number, contact_data, customer_type, employee_id)
-VALUES (1, 'CUST001', 1, 1, 1),
-       (2, 'CUST002', 2, 2, 2);
+INSERT INTO customer (address, customer_number, contact_data, customer_type, employee_id, cif)
+VALUES (1, 'CUST001', 1, 1, 1, '12345678910'),
+       (2, 'CUST002', 2, 2, 2, '10987654321');
 
 INSERT INTO payment_details (payment_date, amount, status, payment_type, late_fee, notes)
 VALUES ('2023-01-01', 100.00, 'Processed', 'Credit Card', 5.00, 'Monthly payment'),

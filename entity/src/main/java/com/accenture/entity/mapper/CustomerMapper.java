@@ -5,9 +5,7 @@ import com.accenture.api.form.CustomerForm;
 import com.accenture.entity.model.Customer;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {ContactDataMapper.class, EmployeeMapper.class, AddressMapper.class,
-        ContactDataMapper.class, CustomerTypeMapper.class} )
+@Mapper(componentModel = "spring")
 public interface CustomerMapper {
 
 

@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS customer (
                                         customer_number TEXT UNIQUE,
                                         contact_data INT UNIQUE REFERENCES contact_data(id),
                                         customer_type INT REFERENCES customer_type(id),
-                                        employee_id INT REFERENCES employee(id)
+                                        employee_id INT REFERENCES employee(id),
+                                        cif TEXT UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS payment_details (

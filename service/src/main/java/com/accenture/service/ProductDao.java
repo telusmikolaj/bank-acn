@@ -1,10 +1,11 @@
 package com.accenture.service;
 
-import com.accenture.api.dto.CreditDTO;
-import com.accenture.api.form.CreditForm;
+import com.accenture.api.dto.ProductDTO;
+
+import java.util.List;
 
 public interface ProductDao {
 
-    CreditDTO create(CreditForm creditForm);
+    List<ProductDTO> createProductPortfolio(String cif);
 
 }
