@@ -3,6 +3,7 @@ package com.accenture.entity.model.employee;
 import com.accenture.entity.model.data.Address;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 
 
 @Entity
@@ -16,6 +17,7 @@ public class Branch {
 
     @OneToOne
     @JoinColumn(name = "address", referencedColumnName = "id", unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Address address;
 
 }

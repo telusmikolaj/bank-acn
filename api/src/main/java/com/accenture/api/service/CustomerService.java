@@ -10,10 +10,5 @@ public interface CustomerService {
 
     CustomerDTO create(CustomerForm customerForm);
 
-    List<CustomerDTO> selectAll();
-
-    CustomerDTO selectById(Long id);
-
-    CustomerDTO selectByCustomerNumber(String customerNumber);
     List<CustomerDTO> searchCustomers(RequestSearchForm searchForm);
 }

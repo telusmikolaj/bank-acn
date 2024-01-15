@@ -10,6 +10,7 @@ import org.mapstruct.Mapper;
         ContactDataMapper.class, CustomerTypeMapper.class} )
 public interface CustomerMapper {
 
+
     CustomerDTO toDto(Customer customer);
     Customer toCustomer(CustomerForm customerForm);
 

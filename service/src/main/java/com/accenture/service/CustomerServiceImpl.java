@@ -24,19 +24,6 @@ public class CustomerServiceImpl implements CustomerService {
         return this.customerDao.create(customerForm);
     }
 
-    @Override
-    public List<CustomerDTO> selectAll() {
-        return this.customerDao.selectAll();
-    }
 
-    @Override
-    public CustomerDTO selectById(Long id) {
-        return this.customerDao.selectById(id);
-    }
-
-    @Override
-    public CustomerDTO selectByCustomerNumber(String customerNumber) {
-        return this.customerDao.selectByCustomerNumber(customerNumber);
-    }
 
 }

@@ -4,6 +4,8 @@ package com.accenture.entity.model.employee;
 import com.accenture.entity.model.data.Address;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Data
@@ -25,14 +27,17 @@ public class Employee {
 
     @ManyToOne
     @JoinColumn(name = "address")
+    @Cascade(CascadeType.PERSIST)
     private Address address;
 
     @ManyToOne
     @JoinColumn(name = "branch_id")
+    @Cascade(CascadeType.PERSIST)
     private Branch branch;
 
     @ManyToOne
     @JoinColumn(name = "role", nullable = false)
+    @Cascade(CascadeType.PERSIST)
     private Role role;
 
     @ManyToOne

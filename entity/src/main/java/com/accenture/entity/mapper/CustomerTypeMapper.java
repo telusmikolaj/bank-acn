@@ -8,4 +8,7 @@ import org.mapstruct.Mapper;
 public interface CustomerTypeMapper {
 
     CustomerTypeDTO toDto(CustomerType customerType);
+
+    CustomerType toCustomerType(CustomerTypeDTO customerTypeDTO);
+
 }
