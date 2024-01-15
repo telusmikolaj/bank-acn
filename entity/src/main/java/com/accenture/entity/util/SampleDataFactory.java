@@ -2,7 +2,7 @@ package com.accenture.entity.util;
 
 import com.accenture.api.dto.*;
 import com.accenture.api.form.CustomerForm;
-import com.accenture.entity.model.customer.CustomerTypeName;
+import com.accenture.api.form.CustomerTypeName;
 import com.accenture.entity.model.employee.RoleName;
 import com.github.javafaker.Faker;
 
@@ -18,8 +18,8 @@ public class SampleDataFactory {
                 .customerNumber("CUST" + faker.business().creditCardNumber())
                 .address(getSampleAddressDto())
                 .contactData(getSampleContactDataDTO())
-                .customerType(getSampleCustomerTypeDto())
-                .employee(getSampleEmployeeDto())
+                .customerType(CustomerTypeName.PREMIUM)
+                .employeeId(1L)
                 .build();
     }
 
@@ -47,12 +47,6 @@ public class SampleDataFactory {
         return ContactDataDTO.builder()
                 .email(faker.internet().emailAddress())
                 .phone(faker.phoneNumber().cellPhone())
-                .build();
-    }
-
-    public static CustomerTypeDTO getSampleCustomerTypeDto() {
-        return CustomerTypeDTO.builder()
-                .name(CustomerTypeName.PREMIUM.name())
                 .build();
     }
 
