@@ -23,13 +23,16 @@ public class ProductJPADataAccessService implements ProductDao {
     @Override
     public CreditDTO create(CreditForm creditForm) {
         Credit transientCredit = this.creditMapper.toCredit(creditForm);
-        Customer customer = this.customerRepository.findById(creditForm.getCustomerId())
-                .orElseThrow(() -> new EntityNotFoundException("Customer with ID " + creditForm.getCustomerId() + " not found"));
-        transientCredit.setCustomer(customer);
+        transientCredit.setCustomer(getCustomerById(creditForm.getCustomerId()));
 
         return this.creditMapper.toDto(
                 this.productRepository.save(transientCredit)
         );
+    }
+
+    private Customer getCustomerById(Long id) {
+        return this.customerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Customer with ID " + id + " not found"));
     }
 
 }

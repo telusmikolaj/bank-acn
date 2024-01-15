@@ -31,7 +31,7 @@ public abstract class Activity {
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "employee_number", nullable = false)
+    @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
 }

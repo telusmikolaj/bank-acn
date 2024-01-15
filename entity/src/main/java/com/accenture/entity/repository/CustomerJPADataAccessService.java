@@ -4,6 +4,7 @@ package com.accenture.entity.repository;
 import com.accenture.api.dto.CustomerDTO;
 import com.accenture.api.exception.EntityNotFoundException;
 import com.accenture.api.form.CustomerForm;
+import com.accenture.api.form.CustomerTypeName;
 import com.accenture.api.form.RequestSearchForm;
 import com.accenture.entity.mapper.CustomerMapper;
 import com.accenture.entity.model.Customer;
@@ -47,21 +48,23 @@ public class CustomerJPADataAccessService implements CustomerDao {
     @Transactional
     public CustomerDTO create(CustomerForm customerForm) {
         Customer transientCustomer = this.customerMapper.toCustomer(customerForm);
-
-        Employee employee = this.employeeRepository.findById(customerForm.getEmployeeId())
-                .orElseThrow(() -> new EntityNotFoundException("Employee with id " + customerForm.getEmployeeId() + " not found"));
-        transientCustomer.setEmployee(employee);
-
-        CustomerType customerType = this.customerTypeRepository.findByName(customerForm.getCustomerType())
-                .orElse(CustomerType.builder()
-                        .name(customerForm.getCustomerType()).build());
-
-        transientCustomer.setCustomerType(customerType);
-
+        transientCustomer.setEmployee(getEmployeeById(customerForm.getEmployeeId()));
+        transientCustomer.setCustomerType(getCustomerTypeByIdOrCreateNew(customerForm.getCustomerType()));
 
         return this.customerMapper.toDto(
                 this.customerRepository.save(transientCustomer)
         );
+    }
+
+    private Employee getEmployeeById(Long id) {
+        return this.employeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Employee with ID " + id + " not found"));
+    }
+
+    private CustomerType getCustomerTypeByIdOrCreateNew(CustomerTypeName customerType) {
+        return this.customerTypeRepository.findByName(customerType)
+                .orElse(CustomerType.builder()
+                        .name(customerType).build());
     }
 
 }
