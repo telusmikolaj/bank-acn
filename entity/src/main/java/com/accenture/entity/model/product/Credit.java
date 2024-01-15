@@ -3,6 +3,8 @@ package com.accenture.entity.model.product;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,6 +26,7 @@ public class Credit extends Product {
 
     @OneToOne
     @JoinColumn(name = "payment_details_id")
+    @Cascade(CascadeType.PERSIST)
     private PaymentDetails paymentDetails;
 
 }
