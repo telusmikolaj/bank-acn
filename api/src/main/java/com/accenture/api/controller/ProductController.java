@@ -18,6 +18,10 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @GetMapping("/{productNumber}")
+    public ProductDTO read(@PathVariable String productNumber) {
+        return this.productService.read(productNumber);
+    }
     @GetMapping("/portfolio/{cif}")
     public List<ProductDTO> getCustomerPortfolio(@PathVariable String cif) {
         return this.productService.getCustomerPortfolio(cif);

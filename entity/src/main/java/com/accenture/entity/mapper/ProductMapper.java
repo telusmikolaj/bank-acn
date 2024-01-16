@@ -16,4 +16,6 @@ public interface ProductMapper {
     @SubclassMapping(source = Leasing.class, target = LeasingDTO.class)
     ProductDTO toDto(Product product);
 
+
+
 }

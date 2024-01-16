@@ -15,6 +15,11 @@ public class ProductServiceImpl implements ProductService {
     private final ProductDao productDao;
 
     @Override
+    public ProductDTO read(String productNumber) {
+        return this.productDao.read(productNumber);
+    }
+
+    @Override
     public List<ProductDTO> getCustomerPortfolio(String cif) {
         return this.productDao.getCustomerPortfolio(cif);
     }
