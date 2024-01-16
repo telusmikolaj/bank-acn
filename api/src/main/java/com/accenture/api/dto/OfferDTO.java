@@ -1,26 +1,18 @@
 package com.accenture.api.dto;
 
+import com.accenture.api.form.ProductType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class OfferDTO {
+public class OfferDTO extends ActivityDTO {
 
     private Long id;
 
-    private LocalDateTime date;
-
-    private String status;
-
-    private String description;
-
-    private CustomerDTO customer;
-
-    private EmployeeDTO employee;
-
-    private ProductDTO product;
+    private ProductType productType;
 
     private LocalDate validityPeriod;
 

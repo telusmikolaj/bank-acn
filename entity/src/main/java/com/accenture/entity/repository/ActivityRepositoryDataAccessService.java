@@ -1,13 +1,13 @@
 package com.accenture.entity.repository;
 
-import com.accenture.api.dto.OfferDTO;
+import com.accenture.api.dto.ActivityDTO;
 import com.accenture.api.exception.EntityNotFoundException;
-import com.accenture.api.form.OfferForm;
-import com.accenture.entity.mapper.OfferMapper;
+import com.accenture.api.form.ActivityForm;
+import com.accenture.entity.mapper.ActivityAbstractMapper;
+import com.accenture.entity.mapper.ActivityMapper;
 import com.accenture.entity.model.Customer;
-import com.accenture.entity.model.activity.Offer;
+import com.accenture.entity.model.activity.Activity;
 import com.accenture.entity.model.employee.Employee;
-import com.accenture.entity.model.product.Product;
 import com.accenture.service.ActivityDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class ActivityRepositoryDataAccessService implements ActivityDao {
 
+    public static final String NOT_FOUND = " not found";
     private final ActivityRepository activityRepository;
 
     private final EmployeeRepository employeeRepository;
@@ -24,32 +25,27 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
 
     private final ProductRepository productRepository;
 
-    private final OfferMapper offerMapper;
+    private final ActivityMapper activityMapper;
+
+    private final ActivityAbstractMapper activityAbstractMapper;
 
     @Override
-    public OfferDTO createOffer(OfferForm form) {
-        Offer transientOffer = this.offerMapper.toOffer(form);
-        transientOffer.setCustomer(getCustomerById(form.getCustomerId()));
-        transientOffer.setEmployee(getEmployeeById(form.getEmployeeId()));
-        transientOffer.setProduct(getProductById(form.getProductId()));
-
-        return this.offerMapper.toDto(
-                this.activityRepository.save(transientOffer)
-        );
+    public ActivityDTO create(ActivityForm activityForm) {
+        Activity activity = this.activityAbstractMapper.toActivity(activityForm);
+        activity.setCustomer(getCustomerByNumber(activityForm.getCustomerNumber()));
+        activity.setEmployee(getEmployeeByNumber(activityForm.getEmployeeNumber()));
+        return this.activityMapper.toDto(this.activityRepository.save(activity));
     }
 
-    private Customer getCustomerById(Long id) {
-        return this.customerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Customer with ID " + id + " not found"));
+    private Customer getCustomerByNumber(String customerNumber) {
+        return this.customerRepository.findCustomerByCustomerNumber(customerNumber)
+                .orElseThrow(() -> new EntityNotFoundException("Customer with number " + customerNumber + " " + NOT_FOUND));
     }
 
-    private Employee getEmployeeById(Long id) {
-        return this.employeeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Employee with ID " + id + " not found"));
+    private Employee getEmployeeByNumber(String employeeNumber) {
+        return this.employeeRepository.findEmployeeByEmployeeNumber(employeeNumber)
+                .orElseThrow(() -> new EntityNotFoundException("Employee with ID " + employeeNumber + " " + NOT_FOUND));
     }
 
-    private Product getProductById(Long id) {
-        return this.productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product with ID " + id + " not found"));
-    }
+
 }

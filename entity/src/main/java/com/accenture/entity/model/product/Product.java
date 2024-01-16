@@ -1,5 +1,6 @@
 package com.accenture.entity.model.product;
 
+import com.accenture.api.form.ProductType;
 import com.accenture.entity.model.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -24,15 +25,15 @@ public abstract class Product {
     private LocalDate openingDate;
     @Column(name = "account_number", unique = true)
     private String accountNumber;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private ProductType type;
 
-    public enum ProductType {
-        CREDIT, LEASING, SAVING_ACCOUNT
-    }
+
 
 }

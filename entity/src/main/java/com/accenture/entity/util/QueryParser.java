@@ -37,9 +37,24 @@ public class QueryParser {
         String value = parts[1];
         SearchRequestDTO.Operation operation = determineOperation(condition, field);
 
+        String joinTable = null;
+        String joinField = null;
+
+        if (field.contains(".")) {
+            String[] joinParts = field.split("\\.");
+            if (joinParts.length != 2) {
+                throw new IllegalArgumentException("Invalid join field format");
+            }
+            joinTable = joinParts[0];
+            joinField = joinParts[1];
+            field = joinField; // Set field to the field of the joined entity
+        }
+
         return SearchRequestDTO.builder()
                 .column(field)
                 .value(value)
+                .joinTable(joinTable)
+                .joinField(joinField)
                 .operation(operation)
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.accenture.entity.model.activity;
 
+import com.accenture.api.form.ActivityStatus;
 import com.accenture.entity.model.Customer;
 import com.accenture.entity.model.employee.Employee;
 import jakarta.persistence.*;
@@ -20,8 +21,9 @@ public abstract class Activity {
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ActivityStatus status;
 
     @Column(name = "description")
     private String description;

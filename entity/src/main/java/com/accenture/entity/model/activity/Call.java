@@ -4,6 +4,8 @@ import com.accenture.entity.model.data.ContactData;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +20,7 @@ public class Call extends Activity {
 
     @ManyToOne
     @JoinColumn(name = "contact_data", nullable = false)
+    @Cascade(CascadeType.PERSIST)
     private ContactData contactData;
 
 }

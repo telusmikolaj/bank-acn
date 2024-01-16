@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS call (
 
 CREATE TABLE IF NOT EXISTS offer (
                                      id INT PRIMARY KEY,
-                                     product_id INT NOT NULL REFERENCES product(id),
+                                     product_type TEXT,
                                      validity_period DATE NOT NULL,
                                      FOREIGN KEY (id) REFERENCES activity(id)
 );

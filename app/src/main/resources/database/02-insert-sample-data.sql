@@ -59,8 +59,8 @@ VALUES (8, 3.5000, 1),
        (9, 3.5000, 1);
 
 INSERT INTO activity (date, status, description, customer_id, employee_id)
-VALUES ('2023-03-01 10:00:00', 'Scheduled', 'Meeting with client', 1, 1),
-       ('2023-04-01 11:00:00', 'Completed', 'Call with client', 2, 2);
+VALUES ('2023-03-01 10:00:00', 'SCHEDULED', 'Meeting with client', 1, 1),
+       ('2023-04-01 11:00:00', 'COMPLETED', 'Call with client', 2, 2);
 
 INSERT INTO meeting (id, address_id)
 VALUES (1, 1);
@@ -68,7 +68,7 @@ VALUES (1, 1);
 INSERT INTO call (id, start_time, contact_data)
 VALUES (2, '2023-04-01 11:00:00', 1);
 
-INSERT INTO offer (id, product_id, validity_period)
-VALUES (1, 1, '2023-12-31');
+INSERT INTO offer (id, product_type, validity_period)
+VALUES (1, 'LEASING', '2023-12-31');
 
 

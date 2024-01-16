@@ -1,6 +1,6 @@
 package com.accenture.entity.model.activity;
 
-import com.accenture.entity.model.product.Product;
+import com.accenture.api.form.ProductType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,9 +13,9 @@ import java.time.LocalDate;
 @Data
 public class Offer extends Activity {
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "product_type")
+    private ProductType productType;
 
     @Column(name = "validity_period", nullable = false)
     private LocalDate validityPeriod;

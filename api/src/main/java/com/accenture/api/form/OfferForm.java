@@ -1,24 +1,16 @@
 package com.accenture.api.form;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class OfferForm {
+public class OfferForm extends ActivityForm {
 
-    private Long productId;
+    private ProductType productType;
 
     private LocalDate validityPeriod;
 
-    private LocalDateTime date;
-
-    private String status;
-
-    private String description;
-
-    private Long customerId;
-
-    private Long employeeId;
 }
