@@ -9,6 +9,8 @@ import java.util.List;
 public interface ProductDao {
     ProductDTO read(String productNumber);
 
+    List<ProductDTO> search(String query);
+
     List<ProductDTO> getCustomerPortfolio(String cif);
 
     ExposureDTO getExposure(@PathVariable String cif);

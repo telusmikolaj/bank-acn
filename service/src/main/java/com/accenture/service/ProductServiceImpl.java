@@ -20,6 +20,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDTO> search(String query) {
+        return this.productDao.search(query);
+    }
+
+    @Override
     public List<ProductDTO> getCustomerPortfolio(String cif) {
         return this.productDao.getCustomerPortfolio(cif);
     }
@@ -28,5 +33,6 @@ public class ProductServiceImpl implements ProductService {
     public ExposureDTO getExposure(String cif) {
         return this.productDao.getExposure(cif);
     }
+
 
 }

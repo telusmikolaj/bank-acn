@@ -6,6 +6,7 @@ import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,20 @@ public class FiltersSpecification<T> {
     public static final String LIKE_OPERATOR = "%";
     private static final String COMMA_REGEX = ",";
 
+    public Specification<T> getGroupedSearchSpecification(List<List<SearchRequestDTO>> groupedSearchConditions) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> orPredicates = new ArrayList<>();
+
+            for (List<SearchRequestDTO> andGroup : groupedSearchConditions) {
+                List<Predicate> andPredicates = andGroup.stream()
+                        .map(dto -> createPredicateFromDto(dto, root, criteriaBuilder))
+                        .toList();
+                orPredicates.add(criteriaBuilder.and(andPredicates.toArray(new Predicate[0])));
+            }
+
+            return criteriaBuilder.or(orPredicates.toArray(new Predicate[0]));
+        };
+    }
     public Specification<T> getSearchSpecification(List<SearchRequestDTO> searchRequestDtos, RequestSearchForm.GlobalOperator globalOperator) {
         if (searchRequestDtos.isEmpty()) {
             return (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
@@ -59,6 +74,7 @@ public class FiltersSpecification<T> {
                     throw new UnsupportedOperationException("Operation " + searchRequestDto.getOperation() + " is not supported.");
         };
     }
+
 
     private Predicate createEqualPredicate(Path<?> path, SearchRequestDTO searchRequestDto, CriteriaBuilder criteriaBuilder) {
         return criteriaBuilder.equal(path, searchRequestDto.getValue());
