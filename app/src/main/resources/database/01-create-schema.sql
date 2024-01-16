@@ -63,7 +63,9 @@ CREATE TABLE IF NOT EXISTS product (
                                        balance DECIMAL(10,2) NOT NULL CHECK (balance > 0),
                                        opening_date DATE NOT NULL,
                                        account_number TEXT UNIQUE,
-                                       customer_id INT NOT NULL REFERENCES customer(id)
+                                       customer_id INT NOT NULL REFERENCES customer(id),
+                                       type TEXT NOT NULL
+
 );
 
 

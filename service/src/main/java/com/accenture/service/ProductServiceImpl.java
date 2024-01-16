@@ -1,5 +1,6 @@
 package com.accenture.service;
 
+import com.accenture.api.dto.ExposureDTO;
 import com.accenture.api.dto.ProductDTO;
 import com.accenture.api.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,13 @@ public class ProductServiceImpl implements ProductService {
     private final ProductDao productDao;
 
     @Override
-    public List<ProductDTO> getProductPortfolio(String cif) {
-        return this.productDao.createProductPortfolio(cif);
+    public List<ProductDTO> getCustomerPortfolio(String cif) {
+        return this.productDao.getCustomerPortfolio(cif);
     }
+
+    @Override
+    public ExposureDTO getExposure(String cif) {
+        return this.productDao.getExposure(cif);
+    }
+
 }

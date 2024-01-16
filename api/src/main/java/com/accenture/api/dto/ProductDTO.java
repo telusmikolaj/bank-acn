@@ -21,7 +21,7 @@ public class ProductDTO {
 
     private CustomerDTO customer;
 
-
+    private String type;
 
 
 }

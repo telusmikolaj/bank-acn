@@ -16,21 +16,23 @@ public abstract class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "product_number")
     private String productNumber;
-
     @Column(name = "balance", nullable = false)
     private BigDecimal balance;
-
     @Column(name = "opening_date", nullable = false)
     private LocalDate openingDate;
-
     @Column(name = "account_number", unique = true)
     private String accountNumber;
-
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private ProductType type;
+
+    public enum ProductType {
+        CREDIT, LEASING, SAVING_ACCOUNT
+    }
 
 }

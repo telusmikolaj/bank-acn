@@ -31,18 +31,32 @@ INSERT INTO payment_details (payment_date, amount, status, payment_type, late_fe
 VALUES ('2023-01-01', 100.00, 'Processed', 'Credit Card', 5.00, 'Monthly payment'),
        ('2023-02-01', 150.00, 'Pending', 'Debit', 10.00, 'Late payment');
 
-INSERT INTO product (product_number, balance, opening_date, account_number, customer_id)
-VALUES ('PROD001', 500.00, '2023-01-01', 'ACC001', 1),
-       ('PROD002', 1000.00, '2023-02-01', 'ACC002', 2);
+INSERT INTO product (product_number, balance, opening_date, account_number, customer_id, type)
+VALUES ('PROD001', 500.00, '2023-01-01', 'ACC001', 1, 'CREDIT'),
+       ('PROD002', 1000.00, '2023-02-01', 'ACC002', 2, 'LEASING'),
+       ('PROD003', 1000.00, '2023-01-01', 'ACC003', 1, 'CREDIT'),
+       ('PROD004', 1000.00, '2023-02-01', 'ACC004', 2, 'LEASING'),
+       ('PROD005', 1000.00, '2023-01-01', 'ACC005', 1, 'LEASING'),
+       ('PROD006', 50000.00, '2023-02-01', 'ACC006', 2, 'CREDIT'),
+       ('PROD007', 2000.00, '2023-01-01', 'ACC007', 1, 'LEASING'),
+       ('PROD008', 50000.00, '2023-02-01', 'ACC008', 2, 'SAVING_ACCOUNT'),
+       ('PROD009', 2000.00, '2023-01-01', 'ACC009', 1, 'SAVING_ACCOUNT');
 
 INSERT INTO credit (id, launch_date, due_date, interest_rate, payment_details_id)
-VALUES (1, '2023-01-01', '2024-01-01', 5.00, 1);
+VALUES (1, '2023-01-01', '2024-01-01', 5.00, 1),
+       (3, '2023-01-01', '2024-01-01', 100, 1),
+       ( 6, '2023-01-01', '2024-01-01', 100, 1);
+
 
 INSERT INTO leasing (id, launch_date, due_date, interest_rate, product_id, payment_details_id)
-VALUES (2, '2023-02-01', '2025-02-01', 4.5000, 2, 2);
+VALUES (2, '2023-02-01', '2025-02-01', 4.5000, 2, 2),
+       (4, '2023-02-01', '2025-02-01', 4.5000, 2, 2),
+       (5, '2023-02-01', '2025-02-01', 4.5000, 2, 2),
+       (7, '2023-02-01', '2025-02-01', 4.5000, 2, 2);
 
 INSERT INTO saving_account (id, interest_rate, product_id)
-VALUES (1, 3.5000, 1);
+VALUES (8, 3.5000, 1),
+       (9, 3.5000, 1);
 
 INSERT INTO activity (date, status, description, customer_id, employee_id)
 VALUES ('2023-03-01 10:00:00', 'Scheduled', 'Meeting with client', 1, 1),

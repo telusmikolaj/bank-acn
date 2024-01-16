@@ -1,5 +1,6 @@
 package com.accenture.api.controller;
 
+import com.accenture.api.dto.ExposureDTO;
 import com.accenture.api.dto.ProductDTO;
 import com.accenture.api.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,13 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/portfolio/{cif}")
-    public List<ProductDTO> getProductPortfolio(@PathVariable String cif) {
-        return this.productService.getProductPortfolio(cif);
+    public List<ProductDTO> getCustomerPortfolio(@PathVariable String cif) {
+        return this.productService.getCustomerPortfolio(cif);
+    }
+
+    @GetMapping("/exposure/{cif}")
+    public ExposureDTO getExposure(@PathVariable String cif) {
+        return this.productService.getExposure(cif);
     }
 
 }
