@@ -5,14 +5,15 @@ import com.accenture.api.dto.CustomerDTO;
 import com.accenture.api.exception.EntityNotFoundException;
 import com.accenture.api.form.CustomerForm;
 import com.accenture.api.form.CustomerTypeName;
-import com.accenture.api.form.RequestSearchForm;
 import com.accenture.entity.mapper.CustomerMapper;
 import com.accenture.entity.model.Customer;
 import com.accenture.entity.model.customer.CustomerType;
 import com.accenture.entity.model.employee.Employee;
 import com.accenture.entity.specification.FiltersSpecification;
+import com.accenture.entity.util.QueryParser;
 import com.accenture.service.CustomerDao;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,19 +31,9 @@ public class CustomerJPADataAccessService implements CustomerDao {
 
     private final CustomerTypeRepository customerTypeRepository;
 
-    private final FiltersSpecification<Customer> customerFiltersSpecification;
+    private final QueryParser queryParser;
 
-    @Override
-    public List<CustomerDTO> searchCustomers(RequestSearchForm searchForm) {
-        return this.customerRepository.findAll(
-                        customerFiltersSpecification.getSearchSpecification(
-                                searchForm.getSearchRequestDTO(),
-                                searchForm.getGlobalOperator()))
-                .stream()
-                .map(customerMapper::toDto)
-                .toList();
-
-    }
+    private final FiltersSpecification<Customer> filter;
 
     @Override
     @Transactional
@@ -54,6 +45,18 @@ public class CustomerJPADataAccessService implements CustomerDao {
         return this.customerMapper.toDto(
                 this.customerRepository.save(transientCustomer)
         );
+    }
+
+    @Override
+    public List<CustomerDTO> searchCustomers(String searchQuery) {
+        Specification<Customer> groupedSearchSpecification
+                = this.filter.getGroupedSearchSpecification(this.queryParser.parseSearchString(searchQuery));
+
+        return this.customerRepository.findAll(groupedSearchSpecification)
+                .stream()
+                .map(this.customerMapper::toDto)
+                .toList();
+
     }
 
     private Employee getEmployeeById(Long id) {

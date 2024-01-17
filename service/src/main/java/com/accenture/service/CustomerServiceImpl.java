@@ -16,8 +16,8 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerDao customerDao;
 
     @Override
-    public List<CustomerDTO> searchCustomers(RequestSearchForm searchForm) {
-        return this.customerDao.searchCustomers(searchForm);
+    public List<CustomerDTO> searchCustomers(String searchQuery) {
+        return this.customerDao.searchCustomers(searchQuery);
     }
     @Override
     public CustomerDTO create(CustomerForm customerForm) {

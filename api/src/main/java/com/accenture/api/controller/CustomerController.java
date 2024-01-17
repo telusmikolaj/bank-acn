@@ -20,10 +20,9 @@ public class CustomerController {
         return this.customerService.create(customerForm);
 
     }
-
     @GetMapping
-    public List<CustomerDTO> searchCustomers(@RequestBody RequestSearchForm requestForm) {
-        return this.customerService.searchCustomers(requestForm);
+    public List<CustomerDTO> searchCustomers(@RequestParam String searchQuery) {
+        return this.customerService.searchCustomers(searchQuery);
 
     }
 

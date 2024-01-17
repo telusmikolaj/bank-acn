@@ -14,7 +14,7 @@ public class QueryParser {
             throw new IllegalArgumentException("Search string is empty");
         }
 
-        String[] orGroups = searchString.split("\\|\\|");
+         String[] orGroups = searchString.split("\\|\\|");
         return Arrays.stream(orGroups)
                 .map(this::parseAndConditions)
                 .toList();
