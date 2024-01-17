@@ -27,4 +27,10 @@ public class CustomerController {
 
     }
 
+    @GetMapping("/portfolio/{employeeId}")
+    public List<CustomerDTO> getPortfolio(@PathVariable Long employeeId){
+        return this.customerService.getPortfolio(employeeId);
+    }
+
+
 }

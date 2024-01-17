@@ -10,4 +10,6 @@ public interface CustomerService {
     CustomerDTO create(CustomerForm customerForm);
 
     List<CustomerDTO> searchCustomers(String searchQuery);
+
+    List<CustomerDTO> getPortfolio(Long employeeId);
 }

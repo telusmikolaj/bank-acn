@@ -12,4 +12,6 @@ public interface CustomerDao {
 
     List<CustomerDTO> searchCustomers(String searchQuery);
 
+    List<CustomerDTO> getPortfolio(Long employeeId);
+
 }

@@ -59,6 +59,13 @@ public class CustomerJPADataAccessService implements CustomerDao {
 
     }
 
+    @Override
+    public List<CustomerDTO> getPortfolio(Long employeeId) {
+        return this.customerRepository.findAllByEmployeeId(employeeId).stream()
+                .map(this.customerMapper::toDto)
+                .toList();
+    }
+
     private Employee getEmployeeById(Long id) {
         return this.employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Employee with ID " + id + " not found"));

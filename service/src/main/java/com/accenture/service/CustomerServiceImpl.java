@@ -24,5 +24,8 @@ public class CustomerServiceImpl implements CustomerService {
         return this.customerDao.create(customerForm);
     }
 
-
+    @Override
+    public List<CustomerDTO> getPortfolio(Long employeeId) {
+        return this.customerDao.getPortfolio(employeeId);
+    }
 }
