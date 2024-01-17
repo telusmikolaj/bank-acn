@@ -13,6 +13,7 @@ import java.util.List;
 @RequestMapping("/activity")
 @RequiredArgsConstructor
 public class ActivityController {
+
     private final ActivityService activityService;
 
     @PostMapping
@@ -36,5 +37,10 @@ public class ActivityController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         this.activityService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    public ActivityDTO update(@PathVariable Long id, @RequestBody ActivityForm form) {
+        return this.activityService.update(id, form);
     }
 }

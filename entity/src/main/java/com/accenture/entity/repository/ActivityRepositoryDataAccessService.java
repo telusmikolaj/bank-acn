@@ -15,6 +15,7 @@ import com.accenture.entity.specification.FiltersSpecification;
 import com.accenture.entity.util.QueryParser;
 import com.accenture.service.ActivityDao;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
@@ -74,6 +75,19 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
         );
     }
 
+    @Override
+    public void delete(Long id) {
+        this.activityRepository.deleteById(id);
+    }
+
+    @Override
+    public ActivityDTO update(Long id, ActivityForm form) {
+        Activity activity = activityRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Activity not found"));
+        this.activityAbstractMapper.updateFields(form, activity);
+        return this.activityMapper.toDto(this.activityRepository.save(activity));
+    }
+
     private Customer getCustomerByNumber(String customerNumber) {
         return this.customerRepository.findCustomerByCustomerNumber(customerNumber)
                 .orElseThrow(() -> new EntityNotFoundException("Customer with number " + customerNumber + " " + NOT_FOUND));
@@ -97,8 +111,4 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
         return new ActivitySummaryDTO(summarizedActivities);
     }
 
-    @Override
-    public void delete(Long id) {
-        this.activityRepository.deleteById(id);
-    }
 }

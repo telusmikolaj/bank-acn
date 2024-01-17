@@ -40,5 +40,8 @@ public class ActivityServiceImpl implements ActivityService {
         this.activityDao.delete(id);
     }
 
-
+    @Override
+    public ActivityDTO update(Long id, ActivityForm form) {
+        return this.activityDao.update(id, form);
+    }
 }

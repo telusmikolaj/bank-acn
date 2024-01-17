@@ -20,7 +20,7 @@ public class Call extends Activity {
 
     @ManyToOne
     @JoinColumn(name = "contact_data", nullable = false)
-    @Cascade(CascadeType.PERSIST)
+    @Cascade(CascadeType.ALL)
     private ContactData contactData;
 
 }

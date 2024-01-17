@@ -18,4 +18,6 @@ public interface ActivityDao {
 
     void delete(Long id);
 
+    ActivityDTO update(Long id, ActivityForm form);
+
 }
