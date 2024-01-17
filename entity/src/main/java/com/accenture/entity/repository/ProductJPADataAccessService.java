@@ -36,7 +36,8 @@ public class ProductJPADataAccessService implements ProductDao {
 
     @Override
     public List<ProductDTO> search(String query) {
-        Specification<Product> groupedSearchSpecification = this.specification.getGroupedSearchSpecification(this.queryParser.parseSearchString(query));
+        Specification<Product> groupedSearchSpecification
+                = this.specification.getGroupedSearchSpecification(this.queryParser.parseSearchString(query));
 
         return this.productRepository.findAll(groupedSearchSpecification)
                 .stream()

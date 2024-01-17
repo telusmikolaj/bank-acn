@@ -11,8 +11,11 @@ import com.accenture.entity.mapper.ActivityMapper;
 import com.accenture.entity.model.Customer;
 import com.accenture.entity.model.activity.Activity;
 import com.accenture.entity.model.employee.Employee;
+import com.accenture.entity.specification.FiltersSpecification;
+import com.accenture.entity.util.QueryParser;
 import com.accenture.service.ActivityDao;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,11 +33,13 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
 
     private final CustomerRepository customerRepository;
 
-    private final ProductRepository productRepository;
-
     private final ActivityMapper activityMapper;
 
     private final ActivityAbstractMapper activityAbstractMapper;
+
+    private final FiltersSpecification<Activity> filter;
+
+    private final QueryParser queryParser;
 
     @Override
     public ActivityDTO create(ActivityForm activityForm) {
@@ -42,6 +47,17 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
         activity.setCustomer(getCustomerByNumber(activityForm.getCustomerNumber()));
         activity.setEmployee(getEmployeeByNumber(activityForm.getEmployeeNumber()));
         return this.activityMapper.toDto(this.activityRepository.save(activity));
+    }
+
+    @Override
+    public List<ActivityDTO> search(String searchQuery) {
+        Specification<Activity> groupedSearchSpecification
+                = this.filter.getGroupedSearchSpecification(this.queryParser.parseSearchString(searchQuery));
+
+        return this.activityRepository.findAll(groupedSearchSpecification)
+                .stream()
+                .map(this.activityMapper::toDto)
+                .toList();
     }
 
     @Override
@@ -69,7 +85,7 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
     }
 
     public ActivitySummaryDTO getSummarizedActivities(List<Activity> activities) {
-        Map<ActivityType, Map<ActivityStatus, Long>> summarizedActivites = activities.stream()
+        Map<ActivityType, Map<ActivityStatus, Long>> summarizedActivities = activities.stream()
                 .collect(Collectors.groupingBy(
                         Activity::getType,
                         Collectors.groupingBy(
@@ -78,7 +94,7 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
                         )
                 ));
 
-        return new ActivitySummaryDTO(summarizedActivites);
+        return new ActivitySummaryDTO(summarizedActivities);
     }
 
 }

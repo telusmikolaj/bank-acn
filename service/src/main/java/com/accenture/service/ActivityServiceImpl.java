@@ -7,6 +7,8 @@ import com.accenture.api.service.ActivityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ActivityServiceImpl implements ActivityService {
@@ -19,6 +21,11 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    public List<ActivityDTO> search(String searchQuery) {
+        return this.activityDao.search(searchQuery);
+    }
+
+    @Override
     public ActivitySummaryDTO getEmployeeActivitySummary(Long employeeId) {
         return this.activityDao.getActivitySummary(employeeId);
     }
@@ -27,4 +34,6 @@ public class ActivityServiceImpl implements ActivityService {
     public ActivitySummaryDTO getCustomerActivitySummary(String cif) {
         return this.activityDao.getCustomerActivitySummary(cif);
     }
+
+
 }
