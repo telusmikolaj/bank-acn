@@ -1,6 +1,7 @@
 package com.accenture.api.dto;
 
 import com.accenture.api.form.ActivityStatus;
+import com.accenture.api.form.ActivityType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,4 +18,6 @@ public class ActivityDTO {
     private String customerNumber;
 
     private String employeeNumber;
+
+    private ActivityType activityType;
 }

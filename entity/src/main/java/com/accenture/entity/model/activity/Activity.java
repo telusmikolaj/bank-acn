@@ -1,6 +1,7 @@
 package com.accenture.entity.model.activity;
 
 import com.accenture.api.form.ActivityStatus;
+import com.accenture.api.form.ActivityType;
 import com.accenture.entity.model.Customer;
 import com.accenture.entity.model.employee.Employee;
 import jakarta.persistence.*;
@@ -35,5 +36,9 @@ public abstract class Activity {
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private ActivityType type;
 
 }

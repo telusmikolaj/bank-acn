@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @JsonTypeInfo(
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "activityType",
+        property = "type",
         use = JsonTypeInfo.Id.NAME,
         visible = true
 )
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Data
 public abstract class ActivityForm {
 
-    private String activityType;
+    private ActivityType type;
 
     private LocalDateTime date;
 

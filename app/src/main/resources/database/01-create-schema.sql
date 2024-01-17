@@ -102,7 +102,8 @@ CREATE TABLE IF NOT EXISTS activity (
                                         status TEXT NOT NULL ,
                                         description TEXT,
                                         customer_id INT NOT NULL REFERENCES customer(id),
-                                        employee_id INT NOT NULL REFERENCES employee(id)
+                                        employee_id INT NOT NULL REFERENCES employee(id),
+                                        type TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS meeting (
