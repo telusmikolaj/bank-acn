@@ -35,5 +35,10 @@ public class ActivityServiceImpl implements ActivityService {
         return this.activityDao.getCustomerActivitySummary(cif);
     }
 
+    @Override
+    public void delete(Long id) {
+        this.activityDao.delete(id);
+    }
+
 
 }

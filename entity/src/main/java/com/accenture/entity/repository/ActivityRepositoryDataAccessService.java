@@ -97,4 +97,8 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
         return new ActivitySummaryDTO(summarizedActivities);
     }
 
+    @Override
+    public void delete(Long id) {
+        this.activityRepository.deleteById(id);
+    }
 }

@@ -16,4 +16,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeDTO> search(String searchQuery) {
         return this.employeeDao.search(searchQuery);
     }
+
+    @Override
+    public List<EmployeeDTO> getSubordinates(String employeeNumber) {
+        return this.employeeDao.getSubordinates(employeeNumber);
+    }
+
+    @Override
+    public EmployeeDTO getSupervisor(String employeeNumber) {
+        return this.employeeDao.getSupervisor(employeeNumber);
+    }
 }

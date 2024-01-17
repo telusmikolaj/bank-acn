@@ -3,10 +3,7 @@ package com.accenture.api.controller;
 import com.accenture.api.dto.EmployeeDTO;
 import com.accenture.api.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +17,16 @@ public class EmployeeController {
     @GetMapping
     public List<EmployeeDTO> search(@RequestParam String searchQuery) {
         return this.employeeService.search(searchQuery);
+    }
+
+    @GetMapping("/subordinates/{employeeNumber}")
+    public List<EmployeeDTO> getSubordinates(@PathVariable String employeeNumber) {
+        return this.employeeService.getSubordinates(employeeNumber);
+    }
+
+    @GetMapping("/supervisor/{employeeNumber}")
+    public EmployeeDTO getSupervisor(@PathVariable String employeeNumber) {
+        return this.employeeService.getSupervisor(employeeNumber);
     }
 
 

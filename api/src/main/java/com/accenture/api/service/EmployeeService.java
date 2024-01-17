@@ -10,4 +10,8 @@ import java.util.List;
 public interface EmployeeService {
 
     List<EmployeeDTO> search(@RequestParam String searchQuery);
+
+    List<EmployeeDTO> getSubordinates(String employeeNumber);
+
+    EmployeeDTO getSupervisor(String employeeNumber);
 }

@@ -32,4 +32,9 @@ public class ActivityController {
     public ActivitySummaryDTO getCustomerActivitySummary(@PathVariable String cif) {
         return this.activityService.getCustomerActivitySummary(cif);
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        this.activityService.delete(id);
+    }
 }

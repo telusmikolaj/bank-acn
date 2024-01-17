@@ -34,4 +34,18 @@ public class EmployeeJPADataAccessService implements EmployeeDao {
                 .map(this.employeeMapper::toDto)
                 .toList();
     }
+
+    @Override
+    public List<EmployeeDTO> getSubordinates(String employeeNumber) {
+        return this.employeeRepository.findAllBySupervisorEmployeeNumber(employeeNumber).stream()
+                .map(this.employeeMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public EmployeeDTO getSupervisor(String employeeNumber) {
+        return this.employeeMapper.toDto(
+                this.employeeRepository.findSupervisorByEmployeeNumber(employeeNumber).orElse(new Employee())
+        );
+    }
 }

@@ -9,4 +9,8 @@ public interface EmployeeDao {
 
      List<EmployeeDTO> search(@RequestParam String searchQuery);
 
+     List<EmployeeDTO> getSubordinates(String employeeNumber);
+
+     EmployeeDTO getSupervisor(String employeeNumber);
+
 }

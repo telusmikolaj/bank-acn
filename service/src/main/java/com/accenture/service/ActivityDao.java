@@ -16,4 +16,6 @@ public interface ActivityDao {
 
     ActivitySummaryDTO getCustomerActivitySummary(String cif);
 
+    void delete(Long id);
+
 }
