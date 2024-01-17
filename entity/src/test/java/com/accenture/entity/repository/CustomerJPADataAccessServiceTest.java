@@ -7,6 +7,7 @@ import com.accenture.api.form.SearchRequestDTO;
 import com.accenture.entity.mapper.CustomerMapper;
 import com.accenture.entity.model.Customer;
 import com.accenture.entity.specification.FiltersSpecification;
+import com.accenture.entity.util.QueryParser;
 import com.accenture.entity.util.SampleDataFactory;
 import com.accenture.entity.util.SearchCondition;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +44,9 @@ class CustomerJPADataAccessServiceTest {
     CustomerRepository customerRepository;
 
     @Autowired
+    QueryParser queryParser;
+
+    @Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
@@ -53,7 +57,7 @@ class CustomerJPADataAccessServiceTest {
 
     @BeforeEach
     void setUp() {
-        this.underTest = new CustomerJPADataAccessService(customerRepository, customerMapper, employeeRepository, customerTypeRepository, filtersSpecification);
+        this.underTest = new CustomerJPADataAccessService(customerRepository, customerMapper, employeeRepository, customerTypeRepository,queryParser, filtersSpecification);
     }
 
     @Test

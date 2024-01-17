@@ -28,7 +28,7 @@ public class QueryParser {
     }
 
     private SearchRequestDTO parseCondition(String condition) {
-        String[] parts = condition.split("==|!=|>|<|>=|<="); // Add more operators as needed
+        String[] parts = condition.split("==|!=|>|<|>=|<=|%"); // Add more operators as needed
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid search condition format");
         }

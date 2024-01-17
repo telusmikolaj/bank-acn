@@ -2,9 +2,9 @@ package com.accenture.api.controller;
 
 import com.accenture.api.dto.CustomerDTO;
 import com.accenture.api.form.CustomerForm;
-import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.service.CustomerService;
-import lombok.RequiredArgsConstructor;import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +20,7 @@ public class CustomerController {
         return this.customerService.create(customerForm);
 
     }
+
     @GetMapping
     public List<CustomerDTO> searchCustomers(@RequestParam String searchQuery) {
         return this.customerService.searchCustomers(searchQuery);

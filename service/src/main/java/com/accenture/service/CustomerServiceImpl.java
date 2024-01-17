@@ -2,7 +2,6 @@ package com.accenture.service;
 
 import com.accenture.api.dto.CustomerDTO;
 import com.accenture.api.form.CustomerForm;
-import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.service.CustomerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,11 +18,11 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerDTO> searchCustomers(String searchQuery) {
         return this.customerDao.searchCustomers(searchQuery);
     }
+
     @Override
     public CustomerDTO create(CustomerForm customerForm) {
         return this.customerDao.create(customerForm);
     }
-
 
 
 }
