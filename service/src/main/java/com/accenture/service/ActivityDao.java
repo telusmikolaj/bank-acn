@@ -9,4 +9,6 @@ public interface ActivityDao {
     ActivityDTO create(ActivityForm activityForm);
 
     ActivitySummaryDTO getActivitySummary(Long employeeId);
+
+    ActivitySummaryDTO getCustomerActivitySummary(String cif);
 }

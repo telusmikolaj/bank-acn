@@ -19,7 +19,12 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public ActivitySummaryDTO getActivitySummary(Long employeeId) {
+    public ActivitySummaryDTO getEmployeeActivitySummary(Long employeeId) {
         return this.activityDao.getActivitySummary(employeeId);
+    }
+
+    @Override
+    public ActivitySummaryDTO getCustomerActivitySummary(String cif) {
+        return this.activityDao.getCustomerActivitySummary(cif);
     }
 }

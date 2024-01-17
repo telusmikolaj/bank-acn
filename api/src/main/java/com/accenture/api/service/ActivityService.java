@@ -8,5 +8,7 @@ public interface ActivityService {
 
     ActivityDTO create(ActivityForm activityForm);
 
-    ActivitySummaryDTO getActivitySummary(Long employeeId);
+    ActivitySummaryDTO getEmployeeActivitySummary(Long employeeId);
+
+    ActivitySummaryDTO getCustomerActivitySummary(String cif);
 }

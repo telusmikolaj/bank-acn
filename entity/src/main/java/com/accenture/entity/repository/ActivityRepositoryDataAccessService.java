@@ -51,6 +51,13 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
         );
     }
 
+    @Override
+    public ActivitySummaryDTO getCustomerActivitySummary(String cif) {
+        return getSummarizedActivities(
+                this.activityRepository.findActivitiesByCustomer_Cif(cif)
+        );
+    }
+
     private Customer getCustomerByNumber(String customerNumber) {
         return this.customerRepository.findCustomerByCustomerNumber(customerNumber)
                 .orElseThrow(() -> new EntityNotFoundException("Customer with number " + customerNumber + " " + NOT_FOUND));

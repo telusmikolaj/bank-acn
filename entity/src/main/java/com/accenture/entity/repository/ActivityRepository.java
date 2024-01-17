@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
     List<Activity> findActivitiesByEmployee_Id(Long employeeId);
+    List<Activity> findActivitiesByCustomer_Cif(String cif);
+
 }
