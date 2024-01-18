@@ -2,6 +2,8 @@ package com.accenture.api.form;
 
 import com.accenture.api.dto.AddressDTO;
 import com.accenture.api.dto.ContactDataDTO;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,6 +11,7 @@ import lombok.Data;
 @Builder
 public class CustomerForm {
 
+    @NotBlank
     private String customerNumber;
 
     private AddressDTO address;
@@ -17,8 +20,10 @@ public class CustomerForm {
 
     private CustomerTypeName customerType;
 
+    @Min(1)
     private Long employeeId;
 
+    @NotBlank
     private String cif;
 
 }

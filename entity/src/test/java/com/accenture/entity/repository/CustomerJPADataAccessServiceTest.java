@@ -6,8 +6,8 @@ import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.form.SearchRequestDTO;
 import com.accenture.entity.mapper.CustomerMapper;
 import com.accenture.entity.model.customer.Customer;
+import com.accenture.entity.model.employee.Employee;
 import com.accenture.entity.specification.FiltersSpecification;
-import com.accenture.entity.util.QueryParser;
 import com.accenture.entity.util.SampleDataFactory;
 import com.accenture.entity.util.SearchCondition;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -24,9 +25,13 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.Mockito.when;
 
 @Testcontainers
 @DataJpaTest
@@ -43,10 +48,7 @@ class CustomerJPADataAccessServiceTest {
     @Autowired
     CustomerRepository customerRepository;
 
-    @Autowired
-    QueryParser queryParser;
-
-    @Autowired
+    @Mock
     private EmployeeRepository employeeRepository;
 
     private CustomerJPADataAccessService underTest;
@@ -55,17 +57,29 @@ class CustomerJPADataAccessServiceTest {
 
     @BeforeEach
     void setUp() {
-        this.underTest = new CustomerJPADataAccessService(customerRepository, customerMapper, employeeRepository, queryParser, filtersSpecification);
+        this.underTest = new CustomerJPADataAccessService(customerRepository, customerMapper, employeeRepository, filtersSpecification);
     }
 
     @Test
-    void create() {
+    void shouldCreateCustomerWhenEmployeeExists() {
         //given
         CustomerForm customerForm = SampleDataFactory.getSampleCustomerForm();
         //when
+        when(employeeRepository.findById(customerForm.getEmployeeId())).thenReturn(Optional.of(new Employee()));
         CustomerDTO customerDTO = this.underTest.create(customerForm);
         //then
         assertThat(customerDTO.getCustomerNumber()).isEqualTo(customerForm.getCustomerNumber());
+
+    }
+
+    @Test
+    void shouldFailedWhenEmployeeNotExists() {
+        //given
+        CustomerForm customerForm = SampleDataFactory.getSampleCustomerForm();
+        //when
+        when(employeeRepository.findById(customerForm.getEmployeeId())).thenReturn(Optional.empty());
+        //then
+        assertThatThrownBy(() -> this.underTest.create(customerForm)).isInstanceOf(EntityNotFoundException.class);
 
     }
 

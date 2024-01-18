@@ -39,7 +39,6 @@ public class Customer {
 
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
-    @Cascade(CascadeType.PERSIST)
     private Employee employee;
 
 }

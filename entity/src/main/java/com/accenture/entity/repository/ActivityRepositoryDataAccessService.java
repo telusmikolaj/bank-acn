@@ -2,7 +2,6 @@ package com.accenture.entity.repository;
 
 import com.accenture.api.dto.ActivityDTO;
 import com.accenture.api.dto.ActivitySummaryDTO;
-import com.accenture.api.exception.EntityNotFoundException;
 import com.accenture.api.form.ActivityForm;
 import com.accenture.api.form.ActivityStatus;
 import com.accenture.api.form.ActivityType;
@@ -17,6 +16,7 @@ import com.accenture.service.ActivityDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,6 +41,7 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
 
     @Override
     public ActivityDTO create(ActivityForm activityForm) {
+
         Activity activity = this.activityAbstractMapper.toActivity(activityForm);
         activity.setCustomer(getCustomerByNumber(activityForm.getCustomerNumber()));
         activity.setEmployee(getEmployeeByNumber(activityForm.getEmployeeNumber()));

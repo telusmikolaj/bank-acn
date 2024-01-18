@@ -4,6 +4,7 @@ import com.accenture.api.dto.CustomerDTO;
 import com.accenture.api.form.CustomerForm;
 import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.service.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping
-    public CustomerDTO create(@RequestBody CustomerForm customerForm) {
+    public CustomerDTO create(@RequestBody @Valid CustomerForm customerForm) {
         return this.customerService.create(customerForm);
 
     }
