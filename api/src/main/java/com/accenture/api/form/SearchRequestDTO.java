@@ -13,9 +13,11 @@ public class SearchRequestDTO {
     private String value;
     private String joinTable;
     private String joinField;
+    private String startTime;
+    private String endTime;
     private Operation operation;
 
     public enum Operation {
-        EQUAL, LIKE, IN, GREATER_THAN, LESS_THAN, BETWEEN, JOIN
+        EQUAL, LIKE, IN, GREATER_THAN, LESS_THAN, BETWEEN, JOIN, DATE_RANGE
     }
 }

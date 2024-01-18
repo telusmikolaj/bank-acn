@@ -2,6 +2,7 @@ package com.accenture.service;
 
 import com.accenture.api.dto.ExposureDTO;
 import com.accenture.api.dto.ProductDTO;
+import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> search(String query) {
-        return this.productDao.search(query);
+    public List<ProductDTO> search(RequestSearchForm requestSearchForm) {
+        return this.productDao.search(requestSearchForm);
     }
 
     @Override

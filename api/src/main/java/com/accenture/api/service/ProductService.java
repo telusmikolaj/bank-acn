@@ -2,6 +2,7 @@ package com.accenture.api.service;
 
 import com.accenture.api.dto.ExposureDTO;
 import com.accenture.api.dto.ProductDTO;
+import com.accenture.api.form.RequestSearchForm;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface ProductService {
 
     ExposureDTO getExposure(String cif);
 
-    List<ProductDTO> search(String query);
+    List<ProductDTO> search(RequestSearchForm requestSearchForm);
 }

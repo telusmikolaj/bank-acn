@@ -6,16 +6,15 @@ import com.accenture.api.exception.EntityNotFoundException;
 import com.accenture.api.form.ActivityForm;
 import com.accenture.api.form.ActivityStatus;
 import com.accenture.api.form.ActivityType;
+import com.accenture.api.form.RequestSearchForm;
 import com.accenture.entity.mapper.ActivityAbstractMapper;
 import com.accenture.entity.mapper.ActivityMapper;
-import com.accenture.entity.model.customer.Customer;
 import com.accenture.entity.model.activity.Activity;
+import com.accenture.entity.model.customer.Customer;
 import com.accenture.entity.model.employee.Employee;
 import com.accenture.entity.specification.FiltersSpecification;
-import com.accenture.entity.util.QueryParser;
 import com.accenture.service.ActivityDao;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,7 +38,6 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
 
     private final FiltersSpecification<Activity> filter;
 
-    private final QueryParser queryParser;
 
     @Override
     public ActivityDTO create(ActivityForm activityForm) {
@@ -50,11 +48,9 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
     }
 
     @Override
-    public List<ActivityDTO> search(String searchQuery) {
-        Specification<Activity> groupedSearchSpecification
-                = this.filter.getGroupedSearchSpecification(this.queryParser.parseSearchString(searchQuery));
+    public List<ActivityDTO> search(RequestSearchForm requestSearchForm) {
 
-        return this.activityRepository.findAll(groupedSearchSpecification)
+        return this.activityRepository.findAll(this.filter.getSearchSpecification(requestSearchForm))
                 .stream()
                 .map(this.activityMapper::toDto)
                 .toList();

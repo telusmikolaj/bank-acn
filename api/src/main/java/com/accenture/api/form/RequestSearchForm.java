@@ -9,6 +9,7 @@ import java.util.List;
 @Builder
 public class RequestSearchForm {
 
+
     private List<SearchRequestDTO> searchRequestDTO;
     private GlobalOperator globalOperator;
 

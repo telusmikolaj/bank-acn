@@ -1,6 +1,7 @@
 package com.accenture.service;
 
 import com.accenture.api.dto.EmployeeDTO;
+import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeDao employeeDao;
     @Override
-    public List<EmployeeDTO> search(String searchQuery) {
-        return this.employeeDao.search(searchQuery);
+    public List<EmployeeDTO> search(RequestSearchForm requestSearchForm) {
+        return this.employeeDao.search(requestSearchForm);
     }
 
     @Override

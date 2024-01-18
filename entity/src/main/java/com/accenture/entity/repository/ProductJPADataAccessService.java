@@ -3,13 +3,12 @@ package com.accenture.entity.repository;
 import com.accenture.api.dto.ExposureDTO;
 import com.accenture.api.dto.ProductDTO;
 import com.accenture.api.exception.EntityNotFoundException;
+import com.accenture.api.form.RequestSearchForm;
 import com.accenture.entity.mapper.ProductMapper;
 import com.accenture.entity.model.product.Product;
 import com.accenture.entity.specification.FiltersSpecification;
-import com.accenture.entity.util.QueryParser;
 import com.accenture.service.ProductDao;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,8 +21,6 @@ public class ProductJPADataAccessService implements ProductDao {
 
     private final ProductMapper productMapper;
 
-    private final QueryParser queryParser;
-
     private final FiltersSpecification<Product> specification;
 
     @Override
@@ -35,11 +32,9 @@ public class ProductJPADataAccessService implements ProductDao {
     }
 
     @Override
-    public List<ProductDTO> search(String query) {
-        Specification<Product> groupedSearchSpecification
-                = this.specification.getGroupedSearchSpecification(this.queryParser.parseSearchString(query));
+    public List<ProductDTO> search(RequestSearchForm requestSearchForm) {
 
-        return this.productRepository.findAll(groupedSearchSpecification)
+        return this.productRepository.findAll(this.specification.getSearchSpecification(requestSearchForm))
                 .stream()
                 .map(this.productMapper::toDto)
                 .toList();

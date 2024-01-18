@@ -4,11 +4,11 @@ package com.accenture.entity.repository;
 import com.accenture.api.dto.CustomerDTO;
 import com.accenture.api.exception.EntityNotFoundException;
 import com.accenture.api.form.CustomerForm;
+import com.accenture.api.form.RequestSearchForm;
 import com.accenture.entity.mapper.CustomerMapper;
 import com.accenture.entity.model.customer.Customer;
 import com.accenture.entity.model.employee.Employee;
 import com.accenture.entity.specification.FiltersSpecification;
-import com.accenture.entity.util.QueryParser;
 import com.accenture.service.CustomerDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,7 +27,6 @@ public class CustomerJPADataAccessService implements CustomerDao {
 
     private final EmployeeRepository employeeRepository;
 
-    private final QueryParser queryParser;
 
     private final FiltersSpecification<Customer> filter;
 
@@ -43,14 +42,12 @@ public class CustomerJPADataAccessService implements CustomerDao {
     }
 
     @Override
-    public List<CustomerDTO> searchCustomers(String searchQuery) {
-        Specification<Customer> groupedSearchSpecification
-                = this.filter.getGroupedSearchSpecification(this.queryParser.parseSearchString(searchQuery));
-
-        return this.customerRepository.findAll(groupedSearchSpecification)
+    public List<CustomerDTO> searchCustomers(RequestSearchForm requestSearchForm) {
+        return this.customerRepository.findAll(this.filter.getSearchSpecification(requestSearchForm))
                 .stream()
                 .map(this.customerMapper::toDto)
                 .toList();
+
 
     }
 

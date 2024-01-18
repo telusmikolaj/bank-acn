@@ -1,16 +1,16 @@
 package com.accenture.service;
 
 import com.accenture.api.dto.EmployeeDTO;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.accenture.api.form.RequestSearchForm;
 
 import java.util.List;
 
 public interface EmployeeDao {
 
-     List<EmployeeDTO> search(@RequestParam String searchQuery);
+    List<EmployeeDTO> search(RequestSearchForm requestSearchForm);
 
-     List<EmployeeDTO> getSubordinates(String employeeNumber);
+    List<EmployeeDTO> getSubordinates(String employeeNumber);
 
-     EmployeeDTO getSupervisor(String employeeNumber);
+    EmployeeDTO getSupervisor(String employeeNumber);
 
 }

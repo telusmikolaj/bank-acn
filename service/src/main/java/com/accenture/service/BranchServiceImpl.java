@@ -1,6 +1,7 @@
 package com.accenture.service;
 
 import com.accenture.api.dto.BranchDTO;
+import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.service.BranchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,8 @@ public class BranchServiceImpl implements BranchService {
 
     private final BranchDao branchDao;
     @Override
-    public List<BranchDTO> search(String searchQuery) {
-        return this.branchDao.search(searchQuery);
+    public List<BranchDTO> search(RequestSearchForm requestSearchForm) {
+        return this.branchDao.search(requestSearchForm);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.accenture.api.controller;
 
 import com.accenture.api.dto.ExposureDTO;
 import com.accenture.api.dto.ProductDTO;
+import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class ProductController {
         return this.productService.read(productNumber);
     }
     @GetMapping("/search")
-    public List<ProductDTO> search(@RequestParam String query) {
-        return this.productService.search(query);
+    public List<ProductDTO> search(@RequestBody RequestSearchForm requestSearchForm) {
+        return this.productService.search(requestSearchForm);
     }
     @GetMapping("/portfolio/{cif}")
     public List<ProductDTO> getCustomerPortfolio(@PathVariable String cif) {

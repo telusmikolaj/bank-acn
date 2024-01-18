@@ -3,6 +3,7 @@ package com.accenture.service;
 import com.accenture.api.dto.ActivityDTO;
 import com.accenture.api.dto.ActivitySummaryDTO;
 import com.accenture.api.form.ActivityForm;
+import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.service.ActivityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,8 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public List<ActivityDTO> search(String searchQuery) {
-        return this.activityDao.search(searchQuery);
+    public List<ActivityDTO> search(RequestSearchForm requestSearchForm) {
+        return this.activityDao.search(requestSearchForm);
     }
 
     @Override
