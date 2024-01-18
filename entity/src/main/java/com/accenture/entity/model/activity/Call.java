@@ -1,11 +1,12 @@
 package com.accenture.entity.model.activity;
 
 import com.accenture.entity.model.data.ContactData;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import java.time.LocalDateTime;
 
@@ -18,9 +19,7 @@ public class Call extends Activity {
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
-    @ManyToOne
-    @JoinColumn(name = "contact_data", nullable = false)
-    @Cascade(CascadeType.ALL)
+    @Embedded
     private ContactData contactData;
 
 }

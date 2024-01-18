@@ -2,30 +2,19 @@ INSERT INTO address (street, city, province, postal_code, country)
 VALUES ('123 Main St', 'Springfield', 'State', '12345', 'Country'),
        ('456 Elm St', 'Shelbyville', 'State', '67890', 'Country');
 
-INSERT INTO contact_data (phone, email)
-VALUES ('+1234567890', 'john.doe@example.com'),
-       ('+1987654321', 'jane.doe@example.com');
-
 INSERT INTO branch (address)
 VALUES (1),
        (2);
 
-INSERT INTO role (name)
-VALUES ('MANAGER'),
-       ('SALES');
-
-INSERT INTO customer_type (name)
-VALUES ('REGULAR'),
-       ('PREMIUM');
 
 INSERT INTO employee (employee_number, first_name, last_name, address, branch_id, role, supervisor)
-VALUES ('EMP001', 'John', 'Doe', 1, 1, 1, NULL),
-       ('EMP002', 'Jane', 'Smith', 2, 2, 2, 1);
+VALUES ('EMP001', 'John', 'Doe', 1, 1, 'MANAGER', NULL),
+       ('EMP002', 'Jane', 'Smith', 2, 2, 'SALES', 1);
 
 
-INSERT INTO customer (address, customer_number, contact_data, customer_type, employee_id, cif)
-VALUES (1, 'CUST001', 1, 1, 1, '12345678910'),
-       (2, 'CUST002', 2, 2, 2, '10987654321');
+INSERT INTO customer (address, customer_number, employee_id, cif, phone, email, customer_type)
+VALUES (1, 'CUST001',1, '12345678910', '+1234567890', 'john.doe@example.com', 'PREMIUM'),
+       (2, 'CUST002', 2, '10987654321', '+1987654321', 'jane.doe@example.com', 'REGULAR');
 
 INSERT INTO payment_details (payment_date, amount, status, payment_type, late_fee, notes)
 VALUES ('2023-01-01', 100.00, 'Processed', 'Credit Card', 5.00, 'Monthly payment'),
@@ -65,8 +54,8 @@ VALUES ('2023-03-01 10:00:00', 'SCHEDULED', 'Meeting with client', 1, 1, 'MEETIN
 INSERT INTO meeting (id, address_id)
 VALUES (1, 1);
 
-INSERT INTO call (id, start_time, contact_data)
-VALUES (2, '2023-04-01 11:00:00', 1);
+INSERT INTO call (id, start_time,phone, email)
+VALUES (2, '2023-04-01 11:00:00', '+1234567890', 'john.doe@example.com');
 
 INSERT INTO offer (id, product_type, validity_period)
 VALUES (1, 'LEASING', '2023-12-31');

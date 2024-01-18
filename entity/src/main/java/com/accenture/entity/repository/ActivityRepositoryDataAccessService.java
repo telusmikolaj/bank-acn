@@ -8,14 +8,13 @@ import com.accenture.api.form.ActivityStatus;
 import com.accenture.api.form.ActivityType;
 import com.accenture.entity.mapper.ActivityAbstractMapper;
 import com.accenture.entity.mapper.ActivityMapper;
-import com.accenture.entity.model.Customer;
+import com.accenture.entity.model.customer.Customer;
 import com.accenture.entity.model.activity.Activity;
 import com.accenture.entity.model.employee.Employee;
 import com.accenture.entity.specification.FiltersSpecification;
 import com.accenture.entity.util.QueryParser;
 import com.accenture.service.ActivityDao;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 

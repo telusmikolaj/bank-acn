@@ -35,10 +35,9 @@ public class Employee {
     @Cascade(CascadeType.PERSIST)
     private Branch branch;
 
-    @ManyToOne
-    @JoinColumn(name = "role", nullable = false)
-    @Cascade(CascadeType.PERSIST)
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    private RoleName role;
+
 
     @ManyToOne
     @JoinColumn(name = "supervisor")

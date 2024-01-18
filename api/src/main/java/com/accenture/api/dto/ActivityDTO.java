@@ -19,5 +19,5 @@ public class ActivityDTO {
 
     private String employeeNumber;
 
-    private ActivityType activityType;
+    private ActivityType type;
 }

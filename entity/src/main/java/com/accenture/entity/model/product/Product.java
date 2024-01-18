@@ -1,7 +1,7 @@
 package com.accenture.entity.model.product;
 
 import com.accenture.api.form.ProductType;
-import com.accenture.entity.model.Customer;
+import com.accenture.entity.model.customer.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
 

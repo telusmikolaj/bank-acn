@@ -12,6 +12,6 @@ public class ActivitySummaryDTO {
     Map<ActivityType, Map<ActivityStatus, Long>> activites;
 
     public ActivitySummaryDTO(Map<ActivityType, Map<ActivityStatus, Long>> activitesMap) {
-        this.activites = activites;
+        this.activites = activitesMap;
     }
 }

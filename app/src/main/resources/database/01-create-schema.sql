@@ -7,23 +7,9 @@ CREATE TABLE IF NOT EXISTS address (
                                        country TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS contact_data (
-                                            id SERIAL PRIMARY KEY,
-                                            phone TEXT UNIQUE,
-                                            email TEXT UNIQUE
-);
 CREATE TABLE IF NOT EXISTS branch (
                                       id SERIAL PRIMARY KEY,
                                       address INT UNIQUE REFERENCES address(id)
-);
-CREATE TABLE IF NOT EXISTS role (
-                                    id SERIAL PRIMARY KEY,
-                                    name TEXT UNIQUE,
-                                    description TEXT
-);
-CREATE TABLE IF NOT EXISTS customer_type (
-                                             id SERIAL PRIMARY KEY,
-                                             name TEXT UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS employee (
@@ -33,17 +19,18 @@ CREATE TABLE IF NOT EXISTS employee (
                                         last_name TEXT NOT NULL,
                                         address INT REFERENCES address(id),
                                         branch_id INT REFERENCES branch(id),
-                                        role INT NOT NULL REFERENCES role(id),
+                                        role TEXT NOT NULL,
                                         supervisor INT REFERENCES employee(id)
 );
 CREATE TABLE IF NOT EXISTS customer (
                                         id SERIAL PRIMARY KEY,
                                         address INT REFERENCES address(id),
                                         customer_number TEXT UNIQUE,
-                                        contact_data INT UNIQUE REFERENCES contact_data(id),
-                                        customer_type INT REFERENCES customer_type(id),
                                         employee_id INT REFERENCES employee(id),
-                                        cif TEXT UNIQUE
+                                        cif TEXT UNIQUE,
+                                        phone TEXT UNIQUE,
+                                        email TEXT UNIQUE,
+                                        customer_type TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS payment_details (
@@ -115,7 +102,8 @@ CREATE TABLE IF NOT EXISTS meeting (
 CREATE TABLE IF NOT EXISTS call (
                                     id INT PRIMARY KEY,
                                     start_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-                                    contact_data INT NOT NULL REFERENCES contact_data(id),
+                                    phone TEXT UNIQUE,
+                                    email TEXT UNIQUE,
                                     FOREIGN KEY (id) REFERENCES activity(id)
 );
 

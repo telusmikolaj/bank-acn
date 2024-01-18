@@ -1,6 +1,6 @@
-package com.accenture.entity.model;
+package com.accenture.entity.model.customer;
 
-import com.accenture.entity.model.customer.CustomerType;
+import com.accenture.api.form.CustomerTypeName;
 import com.accenture.entity.model.data.Address;
 import com.accenture.entity.model.data.ContactData;
 import com.accenture.entity.model.employee.Employee;
@@ -30,15 +30,12 @@ public class Customer {
     @Cascade(CascadeType.PERSIST)
     private Address address;
 
-    @OneToOne
-    @JoinColumn(name = "contact_data", referencedColumnName = "id")
-    @Cascade(CascadeType.PERSIST)
+    @Embedded
     private ContactData contactData;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_type", referencedColumnName = "id")
-    @Cascade(CascadeType.PERSIST)
-    private CustomerType customerType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "customer_type")
+    private CustomerTypeName customerType;
 
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
