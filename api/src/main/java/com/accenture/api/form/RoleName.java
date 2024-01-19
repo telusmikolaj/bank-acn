@@ -1,4 +1,4 @@
-package com.accenture.entity.model.employee;
+package com.accenture.api.form;
 
 public enum RoleName {
     MANAGER, SALES

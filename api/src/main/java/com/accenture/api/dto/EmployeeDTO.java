@@ -1,5 +1,6 @@
 package com.accenture.api.dto;
 
+import com.accenture.api.form.RoleName;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,6 +20,6 @@ public class EmployeeDTO {
 
     private BranchDTO branch;
 
-    private RoleDTO role;
+    private RoleName role;
 
 }

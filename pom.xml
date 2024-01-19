@@ -18,6 +18,7 @@
         <module>app</module>
         <module>service</module>
         <module>entity</module>
+        <module>common</module>
     </modules>
 
     <properties>

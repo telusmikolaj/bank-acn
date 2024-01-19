@@ -1,13 +1,10 @@
-package com.accenture.entity.util;
+package util;
 
-import com.accenture.api.dto.AddressDTO;
-import com.accenture.api.dto.BranchDTO;
-import com.accenture.api.dto.ContactDataDTO;
-import com.accenture.api.dto.EmployeeDTO;
-import com.accenture.api.form.CustomerForm;
-import com.accenture.api.form.CustomerTypeName;
-import com.accenture.api.form.RoleName;
+import com.accenture.api.dto.*;
+import com.accenture.api.form.*;
 import com.github.javafaker.Faker;
+
+import java.util.List;
 
 public class SampleDataFactory {
 
@@ -18,8 +15,8 @@ public class SampleDataFactory {
 
     public static CustomerForm getSampleCustomerForm() {
         return CustomerForm.builder()
-                .customerNumber("CUST" + faker.business().creditCardNumber())
-                .cif("CUST" + faker.business().creditCardNumber())
+                .customerNumber(getFakeCustomerNumber())
+                .cif(getFakeCustomerNumber())
                 .address(getSampleAddressDto())
                 .contactData(getSampleContactDataDTO())
                 .customerType(CustomerTypeName.PREMIUM)
@@ -27,8 +24,20 @@ public class SampleDataFactory {
                 .build();
     }
 
+    public static CustomerDTO getSampleCustomerDto() {
+        return CustomerDTO.builder()
+                .customerType(CustomerTypeName.PREMIUM)
+                .cif(getFakeCustomerNumber())
+                .customerNumber(getFakeCustomerNumber())
+                .contactData(getSampleContactDataDTO())
+                .employee(getSampleEmployeeDto())
+                .address(getSampleAddressDto())
+                .build();
+    }
+
     public static EmployeeDTO getSampleEmployeeDto() {
         return EmployeeDTO.builder()
+                .id(1L)
                 .employeeNumber("EMP" + faker.business().creditCardNumber())
                 .firstName(faker.name().firstName())
                 .lastName(faker.name().lastName())
@@ -54,11 +63,30 @@ public class SampleDataFactory {
                 .build();
     }
 
-
     public static BranchDTO getSampleBranchDto() {
         return BranchDTO.builder()
                 .address(getSampleAddressDto())
                 .build();
+    }
+
+    public static List<CustomerDTO> getSampleCustomerDtoList() {
+        return List.of(
+                getSampleCustomerDto(),
+                getSampleCustomerDto(),
+                getSampleCustomerDto()
+        );
+    }
+
+    public static RequestSearchForm getSampleRequestSearchForm() {
+        return RequestSearchForm.builder()
+                .searchRequestDTO(List.of(SearchRequestDTO.builder().build()))
+                .globalOperator(RequestSearchForm.GlobalOperator.AND)
+                .build();
+    }
+
+
+    private static String getFakeCustomerNumber() {
+        return "CUST" + faker.business().creditCardNumber();
     }
 
 }

@@ -1,8 +1,11 @@
 package com.accenture.api.dto;
 
+import com.accenture.api.form.CustomerTypeName;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class CustomerDTO {
     private Long id;
 
@@ -12,7 +15,7 @@ public class CustomerDTO {
 
     private ContactDataDTO contactData;
 
-    private CustomerTypeDTO customerType;
+    private CustomerTypeName customerType;
 
     private EmployeeDTO employee;
 

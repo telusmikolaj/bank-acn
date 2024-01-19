@@ -1,6 +1,7 @@
 package com.accenture.entity.model.employee;
 
 
+import com.accenture.api.form.RoleName;
 import com.accenture.entity.model.data.Address;
 import jakarta.persistence.*;
 import lombok.Data;
