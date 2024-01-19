@@ -1,6 +1,7 @@
 package com.accenture.entity.repository;
 
 import com.accenture.api.dto.CustomerDTO;
+import com.accenture.api.exception.CustomDataAccessException;
 import com.accenture.api.form.CustomerForm;
 import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.form.SearchRequestDTO;
@@ -40,6 +41,7 @@ import static org.mockito.Mockito.when;
 class CustomerJPADataAccessServiceTest {
 
     public static final String CUSTOMER_NUMBER_COLUMN = "customerNumber";
+    public static final String EXISTING_CUSTOMER_NUMBER = "CUST001";
     @Container
     @ServiceConnection
     static PostgreSQLContainer postgres = new PostgreSQLContainer("postgres");
@@ -83,52 +85,62 @@ class CustomerJPADataAccessServiceTest {
 
     }
 
+    @Test
+    void shouldFailedWhenRequiredFieldIsNull() {
+        //given
+        CustomerForm customerForm = SampleDataFactory.getSampleCustomerForm();
+        customerForm.setCustomerType(null);
+        //when
+        when(employeeRepository.findById(customerForm.getEmployeeId())).thenReturn(Optional.of(new Employee()));
+        //then
+        assertThatThrownBy(() -> this.underTest.create(customerForm)).isInstanceOf(CustomDataAccessException.class);
 
-    public SearchCondition createSearchCondition(String column, String value, SearchRequestDTO.Operation operation, String joinTable, String joinField) {
-        SearchCondition.SearchConditionBuilder condition = SearchCondition.builder()
+    }
+
+    @Test
+    void shouldFailedWhenFieldIsNotUnique() {
+        //given
+        CustomerForm customerForm = SampleDataFactory.getSampleCustomerForm();
+        customerForm.setCustomerNumber(EXISTING_CUSTOMER_NUMBER);
+        //when
+        when(employeeRepository.findById(customerForm.getEmployeeId())).thenReturn(Optional.of(new Employee()));
+        //then
+        assertThatThrownBy(() -> this.underTest.create(customerForm)).isInstanceOf(CustomDataAccessException.class);
+
+    }
+
+    @Test
+    void shouldReturnCustomerPortfolioWhenEmployeeExists() {
+        //given
+
+        //when
+        List<CustomerDTO> portfolio = this.underTest.getPortfolio(1L);
+        //then
+        assertThat(portfolio.size()).isEqualTo(1);
+
+    }
+
+    @Test
+    void shouldSearchCustomerByFieldWhenExists() {
+        //given
+        SearchCondition searchCondition = createSearchCondition(CUSTOMER_NUMBER_COLUMN, EXISTING_CUSTOMER_NUMBER, SearchRequestDTO.Operation.EQUAL);
+        //when
+        List<CustomerDTO> customerDTOS = this.underTest.searchCustomers(searchCondition.getSearchRequest(List.of(searchCondition), RequestSearchForm.GlobalOperator.AND));
+        //then
+        assertThat(customerDTOS.stream()
+                .anyMatch(customerDTO ->
+                        customerDTO.getCustomerNumber().equals(EXISTING_CUSTOMER_NUMBER)))
+                .isTrue();
+
+    }
+
+    private SearchCondition createSearchCondition(String column, String value, SearchRequestDTO.Operation operation) {
+        return SearchCondition.builder()
                 .column(column)
                 .value(value)
-                .operation(operation);
-
-        if (isJoinTableAndFieldProvided(joinTable, joinField)) {
-            condition.joinTable(joinTable);
-            condition.joinField(joinField);
-        }
-
-        return condition.build();
-    }
-
-    public RequestSearchForm createComplexRequestSearchForm(List<SearchCondition> conditions, RequestSearchForm.GlobalOperator globalOperator) {
-        List<SearchRequestDTO> dtos = conditions.stream()
-                .map(condition -> buildSearchRequestDTO(condition.getColumn(), condition.getValue(), condition.getOperation(), condition.getJoinTable(), condition.getJoinField()))
-                .toList();
-
-        return buildRequestSearchForm(dtos, globalOperator);
-    }
-
-    private RequestSearchForm buildRequestSearchForm(List<SearchRequestDTO> searchRequestDTOS, RequestSearchForm.GlobalOperator globalOperator) {
-        return RequestSearchForm.builder()
-                .searchRequestDTO(searchRequestDTOS)
-                .globalOperator(globalOperator)
+                .operation(operation)
                 .build();
     }
 
-    private SearchRequestDTO buildSearchRequestDTO(String column, String value, SearchRequestDTO.Operation operation, String joinTable, String joinField) {
-        SearchRequestDTO.SearchRequestDTOBuilder builder = SearchRequestDTO.builder()
-                .column(column)
-                .value(value)
-                .operation(operation);
-
-        if (isJoinTableAndFieldProvided(joinTable, joinField)) {
-            builder.joinTable(joinTable)
-                    .joinField(joinField);
-        }
-
-        return builder.build();
-    }
-
-    private boolean isJoinTableAndFieldProvided(String joinTable, String joinField) {
-        return joinTable != null && !joinTable.isEmpty() && joinField != null && !joinField.isEmpty();
-    }
 
 }

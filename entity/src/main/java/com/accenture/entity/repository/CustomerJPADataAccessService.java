@@ -44,6 +44,9 @@ public class CustomerJPADataAccessService implements CustomerDao {
         } catch (DataAccessException e) {
             log.error("Database access error: {}", e.getMessage());
             throw new CustomDataAccessException("Database operation failed " + e.getMessage());
+        } catch (EntityNotFoundException e) {
+            log.error("Database access error: {}", e.getMessage());
+            throw new EntityNotFoundException("Employee with " + customerForm.getEmployeeId() + " not found");
         } catch (Exception e) {
             log.error("General error: {}", e.getMessage());
             throw new ApiException("Error occurred during processing");
@@ -70,7 +73,7 @@ public class CustomerJPADataAccessService implements CustomerDao {
 
     private Employee getEmployeeById(Long id) {
         return this.employeeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Employee with ID " + id + " not found"));
+                .orElseThrow(EntityNotFoundException::new);
     }
 
 }
