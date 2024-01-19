@@ -66,6 +66,7 @@ public class CustomerJPADataAccessService implements CustomerDao {
 
     @Override
     public List<CustomerDTO> getPortfolio(Long employeeId) {
+        getEmployeeById(employeeId);
         return this.customerRepository.findAllByEmployeeId(employeeId).stream()
                 .map(this.customerMapper::toDto)
                 .toList();

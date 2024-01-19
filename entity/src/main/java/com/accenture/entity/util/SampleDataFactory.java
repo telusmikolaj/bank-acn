@@ -4,10 +4,10 @@ import com.accenture.api.dto.AddressDTO;
 import com.accenture.api.dto.BranchDTO;
 import com.accenture.api.dto.ContactDataDTO;
 import com.accenture.api.dto.EmployeeDTO;
-import com.accenture.api.form.CustomerForm;
-import com.accenture.api.form.CustomerTypeName;
-import com.accenture.api.form.RoleName;
+import com.accenture.api.form.*;
 import com.github.javafaker.Faker;
+
+import java.util.List;
 
 public class SampleDataFactory {
 
@@ -54,6 +54,17 @@ public class SampleDataFactory {
                 .build();
     }
 
+    public static RequestSearchForm getSampleRequestSearchFormForCustomer() {
+        return RequestSearchForm.builder()
+                .searchRequestDTO(List.of(
+                        SearchRequestDTO.builder()
+                                .column("customerNumber")
+                                .value("CUST001")
+                                .operation(SearchRequestDTO.Operation.EQUAL)
+                                .build()
+                ))
+                .build();
+    }
 
     public static BranchDTO getSampleBranchDto() {
         return BranchDTO.builder()
