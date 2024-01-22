@@ -59,7 +59,8 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
 
     @Override
     public ActivitySummaryDTO getActivitySummary(Long employeeId) {
-        if (!this.employeeRepository.existsById(employeeId)) throw new EntityNotFoundException("Employee with id " + employeeId + " " + NOT_FOUND);
+        if (!this.employeeRepository.existsById(employeeId))
+            throw new EntityNotFoundException("Employee with id " + employeeId + " " + NOT_FOUND);
         return getSummarizedActivities(
                 this.activityRepository.findActivitiesByEmployee_Id(employeeId)
         );

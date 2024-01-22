@@ -78,8 +78,8 @@ public class SampleDataFactory {
                 .type(ActivityType.MEETING)
                 .date(LocalDateTime.now())
                 .status(ActivityStatus.CANCELED)
-                .customerNumber(getFakeCustomerNumber())
-                .employeeNumber("EMP" + faker.business().creditCardNumber())
+                .customerNumber("CUST001")
+                .employeeNumber("EMP001")
                 .build();
     }
 

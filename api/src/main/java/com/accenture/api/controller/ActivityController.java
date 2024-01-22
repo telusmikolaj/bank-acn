@@ -44,7 +44,7 @@ public class ActivityController {
     }
 
     @PutMapping("/{id}")
-    public ActivityDTO update(@PathVariable Long id, @RequestBody ActivityForm form) {
+    public ActivityDTO update(@PathVariable Long id, @RequestBody @Valid ActivityForm form) {
         return this.activityService.update(id, form);
     }
 }
