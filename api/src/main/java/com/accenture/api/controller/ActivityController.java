@@ -5,6 +5,7 @@ import com.accenture.api.dto.ActivitySummaryDTO;
 import com.accenture.api.form.ActivityForm;
 import com.accenture.api.form.RequestSearchForm;
 import com.accenture.api.service.ActivityService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class ActivityController {
     private final ActivityService activityService;
 
     @PostMapping
-    public ActivityDTO create(@RequestBody ActivityForm activityForm) {
+    public ActivityDTO create(@RequestBody @Valid ActivityForm activityForm) {
         return this.activityService.create(activityForm);
     }
 

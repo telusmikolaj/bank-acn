@@ -3,8 +3,8 @@ package com.accenture.api.form;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -28,16 +28,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public abstract class ActivityForm {
 
-    @NotBlank(message = "Activity type cannot be empty")
+    @NotNull
     private ActivityType type;
 
-    @NotBlank(message = "Date cannot be empty")
+    @NotNull
     private LocalDateTime date;
 
-    @NotBlank(message = "Activity status cannot be empty")
+    @NotNull
     private ActivityStatus status;
 
-    @NotBlank(message = "Description cannot be empty")
     private String description;
 
     @NotBlank(message = "Customer number cannot be empty")

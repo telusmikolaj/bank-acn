@@ -4,7 +4,9 @@ import com.accenture.api.dto.*;
 import com.accenture.api.form.*;
 import com.github.javafaker.Faker;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public class SampleDataFactory {
 
@@ -87,6 +89,47 @@ public class SampleDataFactory {
 
     private static String getFakeCustomerNumber() {
         return "CUST" + faker.business().creditCardNumber();
+    }
+
+    public static MeetingForm getSampleActvityForm() {
+        return MeetingForm.builder()
+                .address(getSampleAddressForm())
+                .type(ActivityType.MEETING)
+                .date(LocalDateTime.now())
+                .status(ActivityStatus.CANCELED)
+                .customerNumber(getFakeCustomerNumber())
+                .employeeNumber("EMP" + faker.business().creditCardNumber())
+                .build();
+    }
+
+    public static AddressForm getSampleAddressForm() {
+        return AddressForm.builder()
+                .country(faker.address().country())
+                .street(faker.address().streetAddress())
+                .city(faker.address().city())
+                .postalCode(faker.address().zipCode())
+                .province(faker.address().state())
+                .build();
+    }
+
+    public static ActivityDTO getSampleActvityDTO() {
+        return ActivityDTO.builder()
+                .status(ActivityStatus.CANCELED)
+                .date(LocalDateTime.now())
+                .type(ActivityType.MEETING)
+                .customerNumber(getFakeCustomerNumber())
+                .employeeNumber("EMP" + faker.business().creditCardNumber())
+                .build();
+    }
+
+    public static ActivitySummaryDTO getSampleActivitySummaryDto() {
+        return ActivitySummaryDTO.builder()
+                .activites(Map.of(
+                        ActivityType.CALL, Map.of(ActivityStatus.CANCELED, 1L),
+                        ActivityType.MEETING, Map.of(ActivityStatus.SCHEDULED, 5L),
+                        ActivityType.OFFER, Map.of(ActivityStatus.COMPLETED, 2L)
+                ))
+                .build();
     }
 
 }
