@@ -1,12 +1,12 @@
 package com.accenture.entity.util;
 
-import com.accenture.api.dto.AddressDTO;
-import com.accenture.api.dto.BranchDTO;
-import com.accenture.api.dto.ContactDataDTO;
-import com.accenture.api.dto.EmployeeDTO;
+import com.accenture.api.dto.*;
 import com.accenture.api.form.*;
+import com.accenture.entity.model.customer.Customer;
+import com.accenture.entity.model.employee.Employee;
 import com.github.javafaker.Faker;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class SampleDataFactory {
@@ -71,5 +71,55 @@ public class SampleDataFactory {
                 .address(getSampleAddressDto())
                 .build();
     }
+
+    public static MeetingForm getSampleActvityForm() {
+        return MeetingForm.builder()
+                .address(getSampleAddressForm())
+                .type(ActivityType.MEETING)
+                .date(LocalDateTime.now())
+                .status(ActivityStatus.CANCELED)
+                .customerNumber(getFakeCustomerNumber())
+                .employeeNumber("EMP" + faker.business().creditCardNumber())
+                .build();
+    }
+
+    public static AddressForm getSampleAddressForm() {
+        return AddressForm.builder()
+                .country(faker.address().country())
+                .street(faker.address().streetAddress())
+                .city(faker.address().city())
+                .postalCode(faker.address().zipCode())
+                .province(faker.address().state())
+                .build();
+    }
+
+    public static ActivityDTO getSampleActvityDTO() {
+        return ActivityDTO.builder()
+                .status(ActivityStatus.CANCELED)
+                .date(LocalDateTime.now())
+                .type(ActivityType.MEETING)
+                .customerNumber(getFakeCustomerNumber())
+                .employeeNumber("EMP" + faker.business().creditCardNumber())
+                .build();
+    }
+
+    public static Customer getSampleCustomer() {
+        return Customer.builder()
+                .id(1L)
+                .customerNumber(getFakeCustomerNumber())
+                .customerType(CustomerTypeName.PREMIUM)
+                .build();
+    }
+
+    public static Employee getSampleEmployee() {
+        return Employee.builder()
+                .id(1L)
+                .build();
+    }
+
+    private static String getFakeCustomerNumber() {
+        return "CUST" + faker.business().creditCardNumber();
+    }
+
 
 }

@@ -59,6 +59,7 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
 
     @Override
     public ActivitySummaryDTO getActivitySummary(Long employeeId) {
+        if (!this.employeeRepository.existsById(employeeId)) throw new EntityNotFoundException("Employee with id " + employeeId + " " + NOT_FOUND);
         return getSummarizedActivities(
                 this.activityRepository.findActivitiesByEmployee_Id(employeeId)
         );
@@ -73,13 +74,16 @@ public class ActivityRepositoryDataAccessService implements ActivityDao {
 
     @Override
     public void delete(Long id) {
-        this.activityRepository.deleteById(id);
+        Activity activity = this.activityRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        this.activityRepository.delete(activity);
     }
 
     @Override
     public ActivityDTO update(Long id, ActivityForm form) {
         Activity activity = activityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Activity not found"));
+        activity.setCustomer(this.getCustomerByNumber(form.getCustomerNumber()));
+        activity.setEmployee(this.getEmployeeByNumber(form.getEmployeeNumber()));
         this.activityAbstractMapper.updateFields(form, activity);
         return this.activityMapper.toDto(this.activityRepository.save(activity));
     }

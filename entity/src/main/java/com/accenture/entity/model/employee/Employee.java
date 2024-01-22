@@ -4,13 +4,19 @@ package com.accenture.entity.model.employee;
 import com.accenture.api.form.RoleName;
 import com.accenture.entity.model.data.Address;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Data
 @Table(name = "employee")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
 
     @Id

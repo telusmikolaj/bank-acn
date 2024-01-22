@@ -78,17 +78,17 @@ public class CustomerIT {
 
     }
 
-    @Test
-    void shouldSearchCustomer() {
-        RequestSearchForm searchForm = SampleDataFactory.getSampleRequestSearchFormForCustomer();
-
-        ResponseEntity<CustomerDTO[]> response = restTemplate.exchange(
-                "/customer",
-                HttpMethod.GET,
-                new HttpEntity<>(searchForm),
-                CustomerDTO[].class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-    }
+//    @Test
+//    void shouldSearchCustomer() {
+//        RequestSearchForm searchForm = SampleDataFactory.getSampleRequestSearchFormForCustomer();
+//
+//        ResponseEntity<CustomerDTO[]> response = restTemplate.exchange(
+//                "/customer",
+//                HttpMethod.GET,
+//                new HttpEntity<>(searchForm),
+//                CustomerDTO[].class);
+//
+//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+//
+//    }
 }

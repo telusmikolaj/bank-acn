@@ -13,6 +13,9 @@ import org.hibernate.annotations.CascadeType;
 @Entity
 @Table(name = "customer")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
 
     @Id

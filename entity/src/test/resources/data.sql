@@ -14,7 +14,8 @@ VALUES ('EMP001', 'John', 'Doe', 1, 1, 'MANAGER', NULL),
 
 INSERT INTO customer (address, customer_number, employee_id, cif, phone, email, customer_type)
 VALUES (1, 'CUST001',1, '12345678910', '+1234567890', 'john.doe@example.com', 'PREMIUM'),
-       (2, 'CUST002', 2, '10987654321', '+1987654321', 'jane.doe@example.com', 'REGULAR');
+       (2, 'CUST002', 2, '10987654321', '+1987654321', 'jane.doe@example.com', 'REGULAR'),
+       (2, 'CUST003', 1, '109876543213', '+19876543213', 'jane.e@example.com', 'REGULAR');
 
 INSERT INTO payment_details (payment_date, amount, status, payment_type, late_fee, notes)
 VALUES ('2023-01-01', 100.00, 'Processed', 'Credit Card', 5.00, 'Monthly payment'),
@@ -49,7 +50,8 @@ VALUES (8, 3.5000, 1),
 
 INSERT INTO activity (date, status, description, customer_id, employee_id, type)
 VALUES ('2023-03-01 10:00:00', 'SCHEDULED', 'Meeting with client', 1, 1, 'MEETING'),
-       ('2023-04-01 11:00:00', 'COMPLETED', 'Call with client', 2, 2, 'CALL');
+       ('2023-04-01 11:00:00', 'COMPLETED', 'Call with client', 2, 2, 'CALL'),
+       ('2023-04-01 11:00:00', 'CANCELED', 'Offer', 1, 1, 'OFFER');
 
 INSERT INTO meeting (id, address_id)
 VALUES (1, 1);
@@ -58,6 +60,5 @@ INSERT INTO call (id, start_time,phone, email)
 VALUES (2, '2023-04-01 11:00:00', '+1234567890', 'john.doe@example.com');
 
 INSERT INTO offer (id, product_type, validity_period)
-VALUES (1, 'LEASING', '2023-12-31');
-
+VALUES (3, 'LEASING', '2023-12-31');
 

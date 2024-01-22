@@ -19,6 +19,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -103,7 +104,7 @@ class CustomerControllerTest {
         List<CustomerDTO> expectedList = SampleDataFactory.getSampleCustomerDtoList();
         RequestSearchForm searchForm = SampleDataFactory.getSampleRequestSearchForm();
         //when
-        when(customerService.searchCustomers(searchForm)).thenReturn(expectedList);
+        when(customerService.searchCustomers(any(RequestSearchForm.class))).thenReturn(expectedList);
 
         //then
         mockMvc.perform(get(CUSTOMER_URL_TEMPLATE)
