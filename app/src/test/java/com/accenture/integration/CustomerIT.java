@@ -2,7 +2,6 @@ package com.accenture.integration;
 
 import com.accenture.api.dto.CustomerDTO;
 import com.accenture.api.form.CustomerForm;
-import com.accenture.api.form.RequestSearchForm;
 import com.accenture.entity.util.SampleDataFactory;
 import main.Application;
 import org.junit.jupiter.api.Test;
