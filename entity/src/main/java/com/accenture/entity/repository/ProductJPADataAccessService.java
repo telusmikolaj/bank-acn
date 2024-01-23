@@ -23,6 +23,8 @@ public class ProductJPADataAccessService implements ProductDao {
 
     private final FiltersSpecification<Product> specification;
 
+    private final CustomerRepository customerRepository;
+
     @Override
     public ProductDTO read(String productNumber) {
         return this.productMapper.toDto(
@@ -42,6 +44,7 @@ public class ProductJPADataAccessService implements ProductDao {
 
     @Override
     public List<ProductDTO> getCustomerPortfolio(String cif) {
+        if (!this.customerRepository.existsCustomerByCif(cif)) throw new EntityNotFoundException("Customer with cif " + cif + "not found");
         return this.productRepository.findAllByCif(cif)
                 .stream()
                 .map(productMapper::toDto)
@@ -50,6 +53,7 @@ public class ProductJPADataAccessService implements ProductDao {
 
     @Override
     public ExposureDTO getExposure(String cif) {
+        if (!this.customerRepository.existsCustomerByCif(cif)) throw new EntityNotFoundException("Customer with cif " + cif + "not found");
         ExposureDTO exposureDTO = new ExposureDTO();
         getCustomerPortfolio(cif).forEach(exposureDTO::addProductInfo);
         return exposureDTO;

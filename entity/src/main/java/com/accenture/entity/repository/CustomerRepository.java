@@ -16,4 +16,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>, JpaSp
 
     List<Customer> findAllByEmployeeId(Long id);
 
+    boolean existsCustomerByCif(String cif);
 }
