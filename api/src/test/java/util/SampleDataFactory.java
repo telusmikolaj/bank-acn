@@ -142,6 +142,10 @@ public class SampleDataFactory {
         return List.of(getSampleProductDTO(), getSampleProductDTO());
     }
 
+    public static List<EmployeeDTO> getSampleEmployeeDtoList() {
+        return List.of(getSampleEmployeeDto(), getSampleEmployeeDto());
+    }
+
     public static ExposureDTO getSampleExposureDto() {
         ExposureDTO exposureDTO = new ExposureDTO();
         exposureDTO.setExposures(new HashMap<>());
