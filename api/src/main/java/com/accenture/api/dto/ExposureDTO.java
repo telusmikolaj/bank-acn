@@ -1,12 +1,16 @@
 package com.accenture.api.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ExposureDTO {
     private Map<String, ProductExposureInfo> exposures = new HashMap<>();
 
@@ -25,6 +29,7 @@ public class ExposureDTO {
             this.count = 0;
             this.sum = BigDecimal.ZERO;
         }
+
         private void incrementCount() {
             this.count++;
         }

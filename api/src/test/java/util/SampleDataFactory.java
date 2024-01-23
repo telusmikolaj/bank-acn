@@ -4,7 +4,10 @@ import com.accenture.api.dto.*;
 import com.accenture.api.form.*;
 import com.github.javafaker.Faker;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -120,6 +123,31 @@ public class SampleDataFactory {
                 .customerNumber(getFakeCustomerNumber())
                 .employeeNumber("EMP" + faker.business().creditCardNumber())
                 .build();
+    }
+
+    public static ProductDTO getSampleProductDTO() {
+        return ProductDTO.builder()
+                .productNumber(faker.business().creditCardNumber())
+                .id(1L)
+                .balance(BigDecimal.valueOf(100))
+                .openingDate(LocalDate.now())
+                .accountNumber(faker.business().creditCardNumber())
+                .customer(getSampleCustomerDto())
+                .type("LEASING")
+                .build();
+
+    }
+
+    public static List<ProductDTO> getSampleProductDtoList() {
+        return List.of(getSampleProductDTO(), getSampleProductDTO());
+    }
+
+    public static ExposureDTO getSampleExposureDto() {
+        ExposureDTO exposureDTO = new ExposureDTO();
+        exposureDTO.setExposures(new HashMap<>());
+        exposureDTO.addProductInfo(getSampleProductDTO());
+
+        return exposureDTO;
     }
 
     public static ActivitySummaryDTO getSampleActivitySummaryDto() {
