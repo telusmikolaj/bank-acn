@@ -9,6 +9,7 @@ import com.accenture.service.EmployeeDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Repository
@@ -33,6 +34,7 @@ public class EmployeeJPADataAccessService implements EmployeeDao {
 
     @Override
     public List<EmployeeDTO> getSubordinates(String employeeNumber) {
+        if (!this.employeeRepository.existsByEmployeeNumber(employeeNumber)) throw new EntityNotFoundException("Employee with " + employeeNumber + " not found" );
         return this.employeeRepository.findAllBySupervisorEmployeeNumber(employeeNumber).stream()
                 .map(this.employeeMapper::toDto)
                 .toList();
@@ -40,6 +42,7 @@ public class EmployeeJPADataAccessService implements EmployeeDao {
 
     @Override
     public EmployeeDTO getSupervisor(String employeeNumber) {
+        if (!this.employeeRepository.existsByEmployeeNumber(employeeNumber)) throw new EntityNotFoundException("Employee with " + employeeNumber + " not found" );
         return this.employeeMapper.toDto(
                 this.employeeRepository.findSupervisorByEmployeeNumber(employeeNumber).orElse(new Employee())
         );

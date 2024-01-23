@@ -11,7 +11,11 @@ import java.util.Optional;
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
 
     Optional<Employee> findEmployeeByEmployeeNumber(String employeeNumber);
+
     List<Employee> findAllBySupervisorEmployeeNumber(String employeeNumber);
+
     @Query("SELECT e.supervisor FROM Employee e WHERE e.employeeNumber = :employeeNumber")
     Optional<Employee> findSupervisorByEmployeeNumber(String employeeNumber);
+
+    boolean existsByEmployeeNumber(String number);
 }
