@@ -12,6 +12,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -20,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
+@ActiveProfiles("integration-test")
 public class ProductIT {
 
     public static final String PRODUCT_URL_TEMPLATE = "/product";
@@ -47,6 +49,22 @@ public class ProductIT {
 
     }
 
+
+    @Test
+    void shouldReturnPortfolioWhenCifExists() {
+        ResponseEntity<ProductDTO[]> response = restTemplate
+                .exchange(
+                        PRODUCT_URL_TEMPLATE + "/portfolio/12345678910",
+                        HttpMethod.GET,
+                        null,
+                        ProductDTO[].class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody()).hasSize(5);
+
+    }
+
     @Test
     void shouldNotReadProductWhenProductNumberNotExists() {
         ResponseEntity<ProblemDetail> response = restTemplate
@@ -61,22 +79,7 @@ public class ProductIT {
     }
 
     @Test
-    void shouldReturnPortfolioWhenCifExists() {
-        ResponseEntity<ProductDTO[]> response = restTemplate
-                .exchange(
-                        PRODUCT_URL_TEMPLATE + "/portfolio/12345678910",
-                        HttpMethod.GET,
-                        null,
-                        ProductDTO[].class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().length).isEqualTo(5);
-
-    }
-
-    @Test
-    void shouldNotReturnPortfolioWhenCiNotfExists() {
+    void shouldNotReturnPortfolioWhenCiNotExists() {
         ResponseEntity<ProblemDetail> response = restTemplate
                 .exchange(
                         PRODUCT_URL_TEMPLATE + "/portfolio/0",

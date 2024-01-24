@@ -110,6 +110,7 @@ class ActivityControllerTest {
         Long id = 1L;
         MeetingForm sent = SampleDataFactory.getSampleActvityForm();
         ActivityDTO expected = SampleDataFactory.getSampleActvityDTO();
+        when(this.activityService.update(id, sent)).thenReturn(expected);
 
         this.mockMvc.perform(put(ACTIVITY_URL_TEMPLATE + "/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)

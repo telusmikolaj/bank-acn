@@ -126,15 +126,15 @@ public class SampleDataFactory {
     }
 
     public static ProductDTO getSampleProductDTO() {
-        return ProductDTO.builder()
-                .productNumber(faker.business().creditCardNumber())
-                .id(1L)
-                .balance(BigDecimal.valueOf(100))
-                .openingDate(LocalDate.now())
-                .accountNumber(faker.business().creditCardNumber())
-                .customer(getSampleCustomerDto())
-                .type("LEASING")
-                .build();
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProductNumber(faker.business().creditCardNumber());
+        productDTO.setId(1L);
+        productDTO.setBalance(BigDecimal.valueOf(100));
+        productDTO.setOpeningDate(LocalDate.now());
+        productDTO.setAccountNumber(faker.business().creditCardNumber());
+        productDTO.setCustomer(getSampleCustomerDto());
+        productDTO.setType("LEASING");
+        return productDTO;
 
     }
 

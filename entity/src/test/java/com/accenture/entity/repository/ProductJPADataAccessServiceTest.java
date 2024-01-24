@@ -54,14 +54,14 @@ class ProductJPADataAccessServiceTest {
     }
 
     @Test
-    void shouldReadProudctWhenProductNumberValid() {
+    void shouldReadProductWhenProductNumberValid() {
         String existingProductNumber = "PROD001";
         ProductDTO returned = this.underTest.read(existingProductNumber);
         assertThat(returned).isNotNull();
     }
 
     @Test
-    void shouldNotReadProudctWhenProductNumberInvalid() {
+    void shouldNotReadProductWhenProductNumberInvalid() {
         String invalidProductNumber = "0";
         assertThatThrownBy(() -> this.underTest.read(invalidProductNumber)).isInstanceOf(EntityNotFoundException.class);
     }
@@ -72,7 +72,7 @@ class ProductJPADataAccessServiceTest {
         when(this.customerRepository.existsCustomerByCif(validCif)).thenReturn(true);
         List<ProductDTO> customerPortfolio = this.underTest.getCustomerPortfolio(validCif);
         assertThat(customerPortfolio).isNotNull();
-        assertThat(customerPortfolio.size()).isEqualTo(5);
+        assertThat(customerPortfolio).hasSize(5);
     }
 
     @Test

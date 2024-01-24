@@ -114,9 +114,10 @@ class CustomerJPADataAccessServiceTest {
         //given
 
         //when
+        when(this.employeeRepository.findById(1L)).thenReturn(Optional.of(new Employee()));
         List<CustomerDTO> portfolio = this.underTest.getPortfolio(1L);
         //then
-        assertThat(portfolio.size()).isEqualTo(1);
+        assertThat(portfolio.size()).isEqualTo(2);
 
     }
 

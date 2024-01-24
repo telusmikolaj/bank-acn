@@ -60,8 +60,6 @@ class ActivityRepositoryDataAccessServiceTest {
     @Spy
     private ActivityMapper activityMapper = Mappers.getMapper(ActivityMapper.class);
 
-    private ActivityAbstractMapper activityAbstractMapper;
-
     @Spy
     private MeetingMapper meetingMapper = Mappers.getMapper(MeetingMapper.class);
 
@@ -73,7 +71,7 @@ class ActivityRepositoryDataAccessServiceTest {
 
     @BeforeEach
     void setUp() {
-        this.activityAbstractMapper = new ActivityAbstractMapper(
+        ActivityAbstractMapper activityAbstractMapper = new ActivityAbstractMapper(
                 meetingMapper,
                 callMapper,
                 offerMapper
@@ -178,7 +176,7 @@ class ActivityRepositoryDataAccessServiceTest {
         ActivitySummaryDTO activitySummary = this.underTest.getActivitySummary(id);
         Map<ActivityType, Map<ActivityStatus, Long>> activites = activitySummary.getActivites();
         //then
-        assertThat(activites.size()).isEqualTo(2);
+        assertThat(activites).hasSize(2);
         assertThat(activites.get(ActivityType.MEETING)).isNotNull();
         assertThat(activites.get(ActivityType.OFFER)).isNotNull();
     }

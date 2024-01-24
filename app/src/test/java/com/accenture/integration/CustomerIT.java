@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.*;
+import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -18,7 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
-public class CustomerIT {
+@ActiveProfiles("integration-test")
+class CustomerIT {
 
     @Container
     @ServiceConnection
@@ -65,7 +67,7 @@ public class CustomerIT {
         ResponseEntity<CustomerDTO[]> response = restTemplate.exchange("/customer/portfolio/1", HttpMethod.GET, null, CustomerDTO[].class);
         CustomerDTO[] portfolio = response.getBody();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(portfolio.length).isEqualTo(2);
+        assertThat(portfolio).hasSize(2);
 
     }
 
@@ -77,17 +79,4 @@ public class CustomerIT {
 
     }
 
-//    @Test
-//    void shouldSearchCustomer() {
-//        RequestSearchForm searchForm = SampleDataFactory.getSampleRequestSearchFormForCustomer();
-//
-//        ResponseEntity<CustomerDTO[]> response = restTemplate.exchange(
-//                "/customer",
-//                HttpMethod.GET,
-//                new HttpEntity<>(searchForm),
-//                CustomerDTO[].class);
-//
-//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-//
-//    }
 }
