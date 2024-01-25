@@ -13,6 +13,9 @@
     <artifactId>bank-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <organization>
+        <name>telusmikolaj</name>
+    </organization>
     <modules>
         <module>api</module>
         <module>app</module>
@@ -119,6 +122,19 @@
                     <includes>
                         <include>**/*IT.java</include>
                     </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <container>
+                        <mainClass>main.Application</mainClass>
+                    </container>
+                    <to>
+                        <image>telusmikolaj/${artifactId}</image>
+                    </to>
                 </configuration>
             </plugin>
         </plugins>
